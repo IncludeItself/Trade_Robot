@@ -1,0 +1,66 @@
+import logging
+
+from src import state
+
+
+def stack_support_sell(symbol,price):
+    test_logger = logging.getLogger("test_logger")
+    filled_orders=state.t_filled_orders.get(symbol["symbol"],[])
+
+    if not filled_orders or len(filled_orders) == 0:
+        test_logger.info(f"{symbol['symbol']} 不存在已成交的记录，返回最小交易数量{symbol['least_trade_qty']}，价格为0，持仓数量为底仓")
+        return symbol["least_trade_qty"],price,symbol["core_position"]
+
+    # filled_orders 按timestamp逆序排序
+    filled_orders.sort(key=lambda x: x["timestamp"], reverse=True)
+    pos_qty = filled_orders[0]["pos_qty"]
+    test_logger.info(f"最新成交记录:{filled_orders[0]}，记录的持股数量为：{pos_qty}")
+    count = 0
+    qty = 0
+    amt = 0
+    profit = 0
+    unit_cost = price
+    best_qty = 0
+    while count < len(filled_orders):
+        qty += filled_orders[count]["quantity"]
+        amt += filled_orders[count]["price"]*filled_orders[count]["quantity"]
+        if qty > 0 and unit_cost > abs(amt / qty):
+            unit_cost = abs(amt / qty)
+            best_qty = qty
+        count += 1
+    if best_qty>0:
+        return best_qty, round(unit_cost * (1+ symbol["least_profit"]), 2), pos_qty
+    else:
+        return symbol["least_trade_qty"], round(filled_orders[0]["price"]*(1+ symbol["step_rate"]), 2), pos_qty
+
+
+
+def stack_support_buy(symbol,price):
+
+
+    filled_orders=state.t_filled_orders.get(symbol["symbol"],[])
+    if not filled_orders or len(filled_orders)==0:
+        return symbol["least_trade_qty"],price,symbol["core_position"]
+
+    # filled_orders 按timestamp逆序排序
+    filled_orders.sort(key=lambda x: x["timestamp"], reverse=True)
+
+    pos_qty=filled_orders[0]["pos_qty"]
+
+    count =0
+    qty =0
+    amt=0
+    profit=0
+    unit_cost=0
+    best_qty=0
+    while count<len(filled_orders):
+        qty+=filled_orders[count]["quantity"]
+        amt+=filled_orders[count]["price"]*filled_orders[count]["quantity"]
+        if qty<0 and unit_cost<abs(amt/qty):
+            unit_cost=abs(amt/qty)
+            best_qty=qty
+        count+=1
+    if best_qty<0:
+        return -best_qty,round(unit_cost*(1-symbol["least_profit"]),2),pos_qty
+    else:
+        return symbol["least_trade_qty"],round(filled_orders[0]["price"]*(1- symbol["step_rate"]), 2),pos_qty

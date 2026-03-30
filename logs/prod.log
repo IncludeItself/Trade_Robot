@@ -1,0 +1,258 @@
+2026-03-30 18:59:30,488 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 18:59:30,501 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 18:59:30,501 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 18:59:30,501 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 18:59:30,501 - root - INFO - start_end.py:53 - A股任务开启
+2026-03-30 18:59:30,501 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午启动任务" to job store "default"
+2026-03-30 18:59:30,502 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午停止任务" to job store "default"
+2026-03-30 18:59:30,502 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午启动任务" to job store "default"
+2026-03-30 18:59:30,502 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午停止任务" to job store "default"
+2026-03-30 18:59:30,502 - apscheduler.scheduler - INFO - base.py:214 - Scheduler started
+2026-03-30 18:59:30,502 - apscheduler.scheduler - DEBUG - base.py:1151 - Looking for jobs to run
+2026-03-30 18:59:30,502 - apscheduler.scheduler - DEBUG - base.py:1258 - Next wakeup is due at 2026-03-31 09:30:00+08:00 (in 52229.497305 seconds)
+2026-03-30 18:59:35,485 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 18:59:35,487 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 18:59:35,579 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 18:59:35,582 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 18:59:40,589 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 18:59:40,590 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 18:59:40,656 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 18:59:40,656 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:40:50,993 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:40:50,993 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:40:50,993 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:40:50,993 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:40:50,994 - root - INFO - start_end.py:53 - A股任务开启
+2026-03-30 19:40:50,994 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午启动任务" to job store "default"
+2026-03-30 19:40:50,994 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午停止任务" to job store "default"
+2026-03-30 19:40:50,994 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午启动任务" to job store "default"
+2026-03-30 19:40:50,994 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午停止任务" to job store "default"
+2026-03-30 19:40:50,994 - apscheduler.scheduler - INFO - base.py:214 - Scheduler started
+2026-03-30 19:40:50,994 - apscheduler.scheduler - DEBUG - base.py:1151 - Looking for jobs to run
+2026-03-30 19:40:50,994 - apscheduler.scheduler - DEBUG - base.py:1258 - Next wakeup is due at 2026-03-31 09:30:00+08:00 (in 49749.005343 seconds)
+2026-03-30 19:40:55,988 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:40:55,990 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:40:56,094 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:40:56,095 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:42:14,843 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:42:14,843 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:42:14,843 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:42:14,844 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:42:14,844 - root - DEBUG - start_end.py:53 - A股任务开启
+2026-03-30 19:42:14,844 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午启动任务" to job store "default"
+2026-03-30 19:42:14,844 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午停止任务" to job store "default"
+2026-03-30 19:42:14,844 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午启动任务" to job store "default"
+2026-03-30 19:42:14,844 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午停止任务" to job store "default"
+2026-03-30 19:42:14,844 - apscheduler.scheduler - INFO - base.py:214 - Scheduler started
+2026-03-30 19:42:14,844 - apscheduler.scheduler - DEBUG - base.py:1151 - Looking for jobs to run
+2026-03-30 19:42:14,844 - apscheduler.scheduler - DEBUG - base.py:1258 - Next wakeup is due at 2026-03-31 09:30:00+08:00 (in 49665.155187 seconds)
+2026-03-30 19:42:19,839 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:42:19,841 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:42:19,932 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:42:19,933 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:43:09,401 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:43:09,401 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:43:09,401 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:43:09,401 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:43:09,401 - root - INFO - main.py:63 - 当前时间: 2026-03-30 19:43:09，在A股交易时间段内，需要启动
+2026-03-30 19:43:09,401 - root - DEBUG - start_end.py:53 - A股任务开启
+2026-03-30 19:43:09,402 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午启动任务" to job store "default"
+2026-03-30 19:43:09,402 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午停止任务" to job store "default"
+2026-03-30 19:43:09,402 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午启动任务" to job store "default"
+2026-03-30 19:43:09,402 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午停止任务" to job store "default"
+2026-03-30 19:43:09,402 - apscheduler.scheduler - INFO - base.py:214 - Scheduler started
+2026-03-30 19:43:09,402 - apscheduler.scheduler - DEBUG - base.py:1151 - Looking for jobs to run
+2026-03-30 19:43:09,402 - apscheduler.scheduler - DEBUG - base.py:1258 - Next wakeup is due at 2026-03-31 09:30:00+08:00 (in 49610.597519 seconds)
+2026-03-30 19:43:14,396 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:43:14,398 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:43:14,493 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:43:14,494 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:43:19,511 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:43:19,512 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:43:19,613 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:43:19,614 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:43:24,629 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:43:24,630 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:43:24,727 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:43:24,728 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:43:28,263 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:43:28,263 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:43:28,263 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:43:28,263 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:43:28,263 - root - INFO - main.py:63 - 当前时间: 2026-03-30 19:43:28，在A股交易时间段内，需要启动
+2026-03-30 19:43:28,264 - root - DEBUG - start_end.py:53 - A股任务开启
+2026-03-30 19:43:28,264 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午启动任务" to job store "default"
+2026-03-30 19:43:28,264 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午停止任务" to job store "default"
+2026-03-30 19:43:28,264 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午启动任务" to job store "default"
+2026-03-30 19:43:28,264 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午停止任务" to job store "default"
+2026-03-30 19:43:28,264 - apscheduler.scheduler - INFO - base.py:214 - Scheduler started
+2026-03-30 19:43:28,264 - apscheduler.scheduler - DEBUG - base.py:1151 - Looking for jobs to run
+2026-03-30 19:43:28,264 - apscheduler.scheduler - DEBUG - base.py:1258 - Next wakeup is due at 2026-03-31 09:30:00+08:00 (in 49591.735315 seconds)
+2026-03-30 19:45:43,324 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:45:43,324 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:45:43,324 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:45:43,324 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:45:43,324 - root - WARNING - start_end.py:53 - A股任务开启
+2026-03-30 19:45:43,324 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午启动任务" to job store "default"
+2026-03-30 19:45:43,324 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午停止任务" to job store "default"
+2026-03-30 19:45:43,324 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午启动任务" to job store "default"
+2026-03-30 19:45:43,324 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午停止任务" to job store "default"
+2026-03-30 19:45:43,325 - apscheduler.scheduler - INFO - base.py:214 - Scheduler started
+2026-03-30 19:45:43,325 - apscheduler.scheduler - DEBUG - base.py:1151 - Looking for jobs to run
+2026-03-30 19:45:43,325 - apscheduler.scheduler - DEBUG - base.py:1258 - Next wakeup is due at 2026-03-31 09:30:00+08:00 (in 49456.674913 seconds)
+2026-03-30 19:45:48,320 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:45:48,322 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:45:48,394 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:45:48,395 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:45:59,330 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:45:59,330 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:45:59,330 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:45:59,330 - apscheduler.scheduler - INFO - base.py:507 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-30 19:45:59,330 - prod_logger - WARNING - start_end.py:53 - A股任务开启
+2026-03-30 19:45:59,331 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午启动任务" to job store "default"
+2026-03-30 19:45:59,331 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股上午停止任务" to job store "default"
+2026-03-30 19:45:59,331 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午启动任务" to job store "default"
+2026-03-30 19:45:59,331 - apscheduler.scheduler - INFO - base.py:1090 - Added job "A股下午停止任务" to job store "default"
+2026-03-30 19:45:59,331 - apscheduler.scheduler - INFO - base.py:214 - Scheduler started
+2026-03-30 19:45:59,331 - apscheduler.scheduler - DEBUG - base.py:1151 - Looking for jobs to run
+2026-03-30 19:45:59,331 - apscheduler.scheduler - DEBUG - base.py:1258 - Next wakeup is due at 2026-03-31 09:30:00+08:00 (in 49440.668414 seconds)
+2026-03-30 19:46:04,325 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:46:04,327 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:46:04,399 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:46:04,400 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:46:09,408 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:46:09,409 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:46:09,487 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:46:09,488 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:46:14,496 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:46:14,500 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:46:14,585 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:46:14,590 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:46:19,598 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:46:19,598 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:46:19,692 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:46:19,692 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:46:24,697 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:46:24,698 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:46:24,768 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:46:24,768 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:46:29,784 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:46:29,784 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:46:29,872 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:46:29,873 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:46:34,883 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:46:34,884 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:46:34,980 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:46:34,980 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:46:39,996 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:46:39,997 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:46:40,057 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:46:40,057 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:46:45,074 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:46:45,075 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:46:45,170 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:46:45,170 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:46:50,182 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:46:50,183 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:46:50,269 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:46:50,270 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:46:55,316 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:46:55,316 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:46:55,409 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:46:55,409 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:47:00,433 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:47:00,434 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:47:00,517 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:47:00,517 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:47:05,567 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:47:05,568 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:47:05,661 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:47:05,661 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:47:10,705 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:47:10,706 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:47:10,794 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:47:10,794 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:47:15,799 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:47:15,800 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:47:15,901 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:47:15,901 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:47:20,906 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:47:20,907 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:47:21,005 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:47:21,005 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:47:26,011 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:47:26,012 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:47:26,088 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:47:26,088 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:47:31,093 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:47:31,093 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:47:31,180 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:47:31,180 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:47:36,201 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:47:36,201 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:47:36,293 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:47:36,293 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:47:41,298 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:47:41,299 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:47:41,391 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:47:41,391 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:47:46,439 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:47:46,440 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:47:46,518 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:47:46,518 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:47:51,524 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:47:51,524 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:47:51,601 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:47:51,602 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:47:56,618 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:47:56,618 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:47:56,708 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:47:56,709 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:48:01,743 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:48:01,743 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:48:01,821 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:48:01,821 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:48:06,852 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:48:06,853 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:48:06,955 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:48:06,955 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:48:11,971 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:48:11,971 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:48:12,049 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:48:12,049 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:48:17,065 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:48:17,066 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:48:17,162 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:48:17,163 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:48:22,186 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:48:22,186 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:48:22,271 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:48:22,271 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:48:27,287 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:48:27,288 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:48:27,356 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:48:27,356 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:48:32,392 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:48:32,393 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:48:32,476 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:48:32,476 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:48:37,492 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:48:37,493 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:48:37,572 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:48:37,572 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:48:42,591 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:48:42,591 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:48:42,681 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:48:42,682 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:48:47,699 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:48:47,699 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:48:47,778 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:48:47,779 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:48:52,795 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:48:52,796 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:48:52,889 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:48:52,890 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
+2026-03-30 19:48:57,895 - api.api - INFO - api.py:48 - stock_code: sh600499
+2026-03-30 19:48:57,896 - urllib3.connectionpool - DEBUG - connectionpool.py:241 - Starting new HTTP connection (1): hq.sinajs.cn:80
+2026-03-30 19:48:57,972 - urllib3.connectionpool - DEBUG - connectionpool.py:544 - http://hq.sinajs.cn:80 "GET /list=sh600499 HTTP/1.1" 200 168
+2026-03-30 19:48:57,972 - api.api - INFO - api.py:50 - data_list: ['科达制造', '16.380', '16.800', '15.950', '16.470', '15.760', '15.940', '15.950', '40974141', '657500877.000', '6100', '15.940', '57300', '15.930', '800', '15.920', '17900', '15.910', '63600', '15.900', '505673', '15.950', '9800', '15.960', '2000', '15.970', '7500', '15.980', '1300', '15.990', '2026-03-30', '15:00:00', '00', '']
