@@ -19,13 +19,17 @@ WINDOWS = {
 }
 
 
-
 def price_advice(bar_data: list,symbol: Dict):
     test_logger = logging.getLogger("test_logger")
 
+    if bar_data is None or len(bar_data)==0:
+        return {
+            "signal":"Wait",
+            "price":0,
+            "reason":"",
+        }
+
     df = pd.DataFrame(bar_data)
-
-
     result = {}
     for name, window in WINDOWS.items():
         if len(df) < window:
@@ -41,12 +45,11 @@ def price_advice(bar_data: list,symbol: Dict):
         # 价格变化速率（线性回归斜率）
         x = np.arange(len(prices))
         slope = np.polyfit(x, prices, 1)[0] / prices.mean()  # 标准化斜率
-
-        if win_df[-1]["total_volume"]-win_df[0]["total_volume"]==0:
+        cum_volume=win_df.iloc[-1]["total_volume"]-win_df.iloc[0]["total_volume"]
+        if cum_volume==0:
             ma=prices[-1]
         else:
-            ma=(win_df[-1]["total_turnover"]-win_df[0]["total_turnover"])/(win_df[-1]["total_volume"]-win_df[0]["total_volume"])
-
+            ma=(win_df.iloc[-1]["total_turnover"]-win_df.iloc[0]["total_turnover"])/cum_volume
         # ========== 成交量指标 ==========
         # 窗口平均成交量
         avg_vol = volumes.mean()
@@ -67,20 +70,20 @@ def price_advice(bar_data: list,symbol: Dict):
     middle = result.get("middle_window", {})
     long_ = result.get("long_window", {})
     # 日级指标
-    last_second = df.tail(1)
-    last_day=state.t_last_bar_history[symbol["symbol"]]
-    lowest_2d = min(float(last_second["lowest"]), float(last_day["lowest"]))
-    highest_2d = max(float(last_second["highest"]), float(last_day["highest"]))
-    vol_last=last_day.get("volume",0)
-    if last_second["timestamp"] == df[0]["timestamp"]:
+    last_second = df.tail(1).iloc[0]
+    last_day=state.get_last_bar_history(symbol["symbol"])
+    lowest_2d = min(float(last_second["lowest"]), float(last_day["lowest"])) if last_day is not None else float(last_second["lowest"])
+    highest_2d = max(float(last_second["highest"]), float(last_day["highest"])) if last_day is not None else float(last_second["highest"])
+    vol_last=last_day.get("volume",0) if last_day is not None else 0
+    if last_second["timestamp"] == df.iloc[0]["timestamp"]:
         expected_vol=0
     else:
-        expected_vol=round(last_second["total_volume"]*get_period(symbol["exchange"])/(last_second["timestamp"]-df[0]["timestamp"]),2)
+        expected_vol=round(last_second["total_volume"]*get_period(symbol["exchange"])/(last_second["timestamp"]-df.iloc[0]["timestamp"]),2)
 
     volume_status=""
-    if long_["avg_vol"]*2*2<middle["avg_vol"]*2<short["avg_vol"] and vol_last*2<expected_vol:
+    if long_!={} and long_["avg_vol"]*2*2<middle["avg_vol"]*2<short["avg_vol"] and vol_last*2<expected_vol:
         volume_status="volume explode"
-    elif long_["avg_vol"]>middle["avg_vol"]*2>short["avg_vol"]*2*2:
+    elif long_!={} and long_["avg_vol"]>middle["avg_vol"]*2>short["avg_vol"]*2*2:
         volume_status="volume extremely shrink"
 
     step=(highest_2d - lowest_2d) / 5
@@ -119,14 +122,14 @@ def price_advice(bar_data: list,symbol: Dict):
             "price":last_second["price"],
             "reason":"价格处在两天最后四分位上，且明显缩量"
         }
-    middle_break=(last_second["price"]-middle.min())/middle.min() if middle.min()!=0 else 0
+    middle_break=(last_second["price"]-middle.get("min",0.0))/middle.get("min",0.0) if middle.get("min",0.0)!=0 else 0
     if middle_break>appConfig["break_up"] and short["avg_vol"]<middle["avg_vol"]:
         return {
             "signal":"Sell",
             "price":last_second["price"],
             "reason":f"中窗口上涨{round(middle_break,2)},且短窗口平均成交量：{short["avg_vol"]}，小于中窗口平均成交量：{middle["avg_vol"]}"
         }
-    middle_dive=(last_second["price"]-middle.max())/middle.max() if middle.max()!=0 else 0
+    middle_dive=(last_second["price"]-middle.get("max",0.0))/middle.get("max",0.0) if middle.get("max",0.0)!=0 else 0
     if middle_dive<-appConfig["break_up"] and short["avg_vol"]<middle["avg_vol"]:
         return {
             "signal":"Buy",

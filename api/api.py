@@ -69,3 +69,30 @@ def get_symbol_bar_data(exchange,stock_code):
             "turnover": float(data_list[17])
         }
     return None
+
+
+def get_bar_history(exchange,prefix,symbol):
+    if exchange.lower() == "a":
+        data_list = get_sina_stock(prefix+symbol)
+        return {
+            "symbol": symbol,
+            "date": data_list[30],
+            # "pre_close": float(data_list[1]),
+            "open": float(data_list[2]),
+            "close": float(data_list[3]),
+            "highest": float(data_list[4]),
+            "lowest": float(data_list[5]),
+            # "buy1": float(data_list[6]),
+            # "buy2": float(data_list[7]),
+            # "buy3": float(data_list[8]),
+            # "buy4": float(data_list[9]),
+            # "buy5": float(data_list[10]),
+            # "sell1": float(data_list[11]),
+            # "sell2": float(data_list[12]),
+            # "sell3": float(data_list[13]),
+            # "sell4": float(data_list[14]),
+            # "sell5": float(data_list[15]),
+            "volume": float(data_list[16]),
+            "turnover": float(data_list[17])
+        }
+    return None

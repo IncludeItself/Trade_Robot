@@ -13,7 +13,6 @@ def update_tbl_filled_orders(pending_order):
     test_logger = logging.getLogger("test_logger")
     test_logger.info(f"{pending_order['symbol']} {pending_order['direction']} {pending_order['price']} 已成交")
     symbol_filled=state.t_filled_orders.get(pending_order["symbol"],[])
-    old_pos=0
     if symbol_filled and len(symbol_filled)>0:
         old_pos=symbol_filled[0]["pos_qty"]
     else:
@@ -34,10 +33,10 @@ def update_tbl_filled_orders(pending_order):
     index=0
     cum_qty=0
     profit=0
-    while index<len(state.t_filled_orders):
+    while index<len(filled_symbol):
         cum_qty+=filled_symbol[index]["quantity"]
         profit+=-filled_symbol[index]["quantity"]*filled_symbol[index]["price"]
-        if cum_qty==0:
+        if round(cum_qty,2)==0:
             for i in range(0,index+1):
                 filled_symbol[i]["cleared"]=1
             test_logger.info(f"结清{index+1}条成交记录，利润：{profit}")

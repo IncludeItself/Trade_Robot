@@ -16,13 +16,17 @@ check_filled_thread = None  # 存储核心任务的线程对象
 get_bar_data_thread = None
 place_orders_thread = None
 
+def daily_task():
+    """每日任务，用于更新bar数据"""
+    refresh_tbl_pending_order()
+    refresh_tbl_bar_data()
+    insert_bar_history()
 
 def initialize():
 
     global check_filled_thread, get_bar_data_thread, place_orders_thread
     # 清理tbl_pending_order数据表
-    refresh_tbl_pending_order()
-    refresh_tbl_bar_data()
+    daily_task()
 
     state.t_symbols=get_symbols_from_excel()
     state.t_pending_orders=get_pending_orders(state.t_symbols)

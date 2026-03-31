@@ -65,7 +65,7 @@ create table if not exists tbl_filled_orders
 
 ### tbl_bar_history
 ```sql
-create table if not exists tbl_bar_history
+create table if not exists tbl_bar_history_dg_tmp
     (
         symbol   TEXT not null,
         open     REAL not null,
@@ -74,6 +74,8 @@ create table if not exists tbl_bar_history
         close    REAL not null,
         volume   REAL not null,
         turnover REAL not null,
-        date     text not null
+        date     text not null,
+        constraint tbl_bar_history_pk
+            primary key (symbol, date)
     );
 ```

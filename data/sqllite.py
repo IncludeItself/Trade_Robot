@@ -86,7 +86,7 @@ def init_tables():
 
     # 5. 创建tbl_bar_history
     create_bar_history_table_sql = """
-    create table if not exists tbl_bar_history
+    create table if not exists tbl_bar_history_dg_tmp
         (
             symbol   TEXT not null,
             open     REAL not null,
@@ -95,7 +95,9 @@ def init_tables():
             close    REAL not null,
             volume   REAL not null,
             turnover REAL not null,
-            date     text not null
+            date     text not null,
+            constraint tbl_bar_history_pk
+                primary key (symbol, date)
         );
     """
     cursor.execute(create_bar_history_table_sql)
@@ -161,15 +163,16 @@ def get_filled_orders(t_symbols):
     rows = cursor.fetchall()
     result={}
     for symbol_info in t_symbols:
-        result[symbol_info["symbol"]]=[row for row in rows if row["symbol"]==symbol_info["symbol"]]
+        result[symbol_info["symbol"]]=[dict(row) for row in rows if row["symbol"]==symbol_info["symbol"]]
     return result
 
 def get_filled_orders_symbol(symbol:str):
-    """获取指定股票的所有挂单"""
+    """获取指定股票的所有成交记录"""
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM tbl_filled_orders WHERE symbol=? and cleared=0 order by timestamp desc", (symbol,))
     rows = cursor.fetchall()
+    rows=[dict(row) for row in rows]
     return rows
 
 def get_bar_data(symbol,start_time,end_time):
@@ -209,7 +212,7 @@ def get_last_day_bar(symbol:str):
     select_sql = """
         SELECT * FROM tbl_bar_data WHERE symbol=? order by timestamp desc limit 1
                  """
-    cursor.execute(select_sql,symbol)
+    cursor.execute(select_sql, (symbol,))
     conn.commit()
 
 def insert_bar_data(bar_data):
@@ -218,12 +221,12 @@ def insert_bar_data(bar_data):
     cursor = conn.cursor()
     insert_sql = """
     INSERT INTO tbl_bar_data 
-    (symbol, timestamp, price, pre_close, open, highest, lowest, volume, turnover)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    (symbol, timestamp, price, pre_close, open, highest, lowest, volume, turnover,total_volume,total_turnover)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)
     """
     cursor.execute(
         insert_sql,
-        (bar_data["symbol"], bar_data["timestamp"], bar_data["price"], bar_data["pre_close"], bar_data["open"], bar_data["highest"], bar_data["lowest"], bar_data["volume"], bar_data["turnover"])
+        (bar_data["symbol"], bar_data["timestamp"], bar_data["price"], bar_data["pre_close"], bar_data["open"], bar_data["highest"], bar_data["lowest"], bar_data["volume"], bar_data["turnover"],bar_data["total_volume"],bar_data["total_turnover"])
     )
     conn.commit()
     print(f"✅ 插入K线数据 {bar_data['symbol']} {bar_data['timestamp']} 成功")
@@ -285,6 +288,10 @@ def update_tbl_filled_orders_symbol(filled_symbol):
         )
     conn.commit()
     print(f"✅ 更新成交记录 {filled_symbol[0]['symbol']} 成功")
+
+def insert_bar_history():
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
 def insert_order(symbol, order_id, side, order_type, price, quantity, status):
     """插入订单数据，自动计算金额"""

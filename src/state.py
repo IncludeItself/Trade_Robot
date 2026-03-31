@@ -24,7 +24,7 @@ t_period= {}
 
 
 def get_last_bar_history(symbol:str):
-    last_day_bar=t_last_bar_history.get(symbol,{})
+    last_day_bar=t_last_bar_history.get(symbol,None)
     if last_day_bar is None:
         last_day_bar=get_last_day_bar(symbol)
         t_last_bar_history[symbol]=last_day_bar

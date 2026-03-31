@@ -2,7 +2,7 @@ import datetime
 import logging
 import time
 from data.sqllite import get_bar_data, insert_appending_order, get_pending_orders_symbol
-from src.price_advisor import price_advice
+from src.trade_advisor import price_advice
 from src import state
 from src.grid_limit import grid_allow
 from src.locks import orders_lock

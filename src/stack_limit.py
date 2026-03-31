@@ -31,13 +31,13 @@ def stack_support_sell(symbol,price):
     if best_qty>0:
         return best_qty, round(unit_cost * (1+ symbol["least_profit"]), 2), pos_qty
     else:
+        test_logger.info(f"{symbol['symbol']} 最近一次成交为卖单，价格为{filled_orders[0]['price']}，现在挂卖单价格为{round(filled_orders[0]["price"]*(1+ symbol["step_rate"]), 2)}")
         return symbol["least_trade_qty"], round(filled_orders[0]["price"]*(1+ symbol["step_rate"]), 2), pos_qty
 
 
 
 def stack_support_buy(symbol,price):
-
-
+    test_logger = logging.getLogger("test_logger")
     filled_orders=state.t_filled_orders.get(symbol["symbol"],[])
     if not filled_orders or len(filled_orders)==0:
         return symbol["least_trade_qty"],price,symbol["core_position"]
@@ -63,4 +63,5 @@ def stack_support_buy(symbol,price):
     if best_qty<0:
         return -best_qty,round(unit_cost*(1-symbol["least_profit"]),2),pos_qty
     else:
+        test_logger.info(f"{symbol['symbol']} 最近一次成交为买单，价格为{filled_orders[0]['price']}，现在挂买单价格为{round(filled_orders[0]["price"] * (1 - symbol["step_rate"]), 2)}")
         return symbol["least_trade_qty"],round(filled_orders[0]["price"]*(1- symbol["step_rate"]), 2),pos_qty

@@ -26,7 +26,7 @@ class AppConfig:
             "a_trade_day": self._trade_config.get("trading_time", "a_trade_day"),
             "start_time": self._trade_config.get("trading_time", "start_time"),
             "end_time": self._trade_config.get("trading_time", "end_time"),
-            "break_up": self._trade_config.get("threshold", "break_up"),
+            "break_up": self._trade_config.getfloat("threshold", "break_up"),
         }
 
     def _load_config(self, filename):
