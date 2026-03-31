@@ -67,7 +67,8 @@ def place_orders():
         for symbol in state.t_symbols:
             if symbol["platform"]=="ths" and state.is_task_running:
                 bar_data=get_bar_data(symbol["symbol"],0,datetime.datetime.now().timestamp())
-                result = analyze_market_status(bar_data,symbol)
+                # result = analyze_market_status(bar_data,symbol)
+                result=price_advice(bar_data,symbol)
                 signal, reason, price = result["signal"], result["reason"], result["price"]
                 test_logger.info(f"{symbol['symbol']} 分析结果：{signal} {reason} 价格：{price}")
                 with orders_lock:

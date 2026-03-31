@@ -83,6 +83,24 @@ def init_tables():
         """
     cursor.execute(create_filled_orders_table_sql)
     conn.commit()
+
+    # 5. 创建tbl_bar_history
+    create_bar_history_table_sql = """
+    create table if not exists tbl_bar_history
+        (
+            symbol   TEXT not null,
+            open     REAL not null,
+            highest  REAL not null,
+            lowest   REAL not null,
+            close    REAL not null,
+            volume   REAL not null,
+            turnover REAL not null,
+            date     text not null
+        );
+    """
+    cursor.execute(create_bar_history_table_sql)
+    conn.commit()
+
     print("✅ 数据库表初始化成功")
 
 # 在程序启动时，可以先初始化一次
@@ -183,6 +201,16 @@ def get_last_bar_datas(t_symbols):
     for symbol_info in t_symbols:
         result[symbol_info["symbol"]]=get_last_bar_data(symbol_info["symbol"])
     return result
+
+def get_last_day_bar(symbol:str):
+    """获取历史日K线数据"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    select_sql = """
+        SELECT * FROM tbl_bar_data WHERE symbol=? order by timestamp desc limit 1
+                 """
+    cursor.execute(select_sql,symbol)
+    conn.commit()
 
 def insert_bar_data(bar_data):
     """插入K线数据"""

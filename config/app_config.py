@@ -19,13 +19,14 @@ class AppConfig:
         # 读取交易配置
         self._trade_config = self._load_config("app.ini")
         self.appConfig = {
-            "sh_sz_morning_trade_start": self._trade_config.get("trading_time", "sh_sz_morning_trade_start"),
-            "sh_sz_morning_trade_end": self._trade_config.get("trading_time", "sh_sz_morning_trade_end"),
-            "sh_sz_afternoon_trade_start": self._trade_config.get("trading_time", "sh_sz_afternoon_trade_start"),
-            "sh_sz_afternoon_trade_end": self._trade_config.get("trading_time", "sh_sz_afternoon_trade_end"),
-            "sh_sz_trade_day": self._trade_config.get("trading_time", "sh_sz_trade_day"),
+            "a_morning_trade_start": self._trade_config.get("trading_time", "a_morning_trade_start"),
+            "a_morning_trade_end": self._trade_config.get("trading_time", "a_morning_trade_end"),
+            "a_afternoon_trade_start": self._trade_config.get("trading_time", "a_afternoon_trade_start"),
+            "a_afternoon_trade_end": self._trade_config.get("trading_time", "a_afternoon_trade_end"),
+            "a_trade_day": self._trade_config.get("trading_time", "a_trade_day"),
             "start_time": self._trade_config.get("trading_time", "start_time"),
             "end_time": self._trade_config.get("trading_time", "end_time"),
+            "break_up": self._trade_config.get("threshold", "break_up"),
         }
 
     def _load_config(self, filename):

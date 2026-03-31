@@ -62,3 +62,18 @@ create table if not exists tbl_filled_orders
         pos_qty   REAL    not null
     );
 ```
+
+### tbl_bar_history
+```sql
+create table if not exists tbl_bar_history
+    (
+        symbol   TEXT not null,
+        open     REAL not null,
+        highest  REAL not null,
+        lowest   REAL not null,
+        close    REAL not null,
+        volume   REAL not null,
+        turnover REAL not null,
+        date     text not null
+    );
+```

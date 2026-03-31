@@ -18,20 +18,20 @@ def schedule_jobs(scheduler):
     logger = logging.getLogger()
 
 
-    # 获取sh_sz_morning_trade_start的小时和分钟
+    # 获取a_morning_trade_start的小时和分钟
     # daily_start = appConfig["start_time"]
     # daily_start_hour, daily_start_minute = map(int, daily_start.split(":"))
     # daily_end = appConfig["end_time"]
     # daily_end_hour, daily_end_minute = map(int, daily_end.split(":"))
-    morning_a_start = appConfig["sh_sz_morning_trade_start"]
+    morning_a_start = appConfig["a_morning_trade_start"]
     morning_a_start_hour, morning_a_start_minute = map(int, morning_a_start.split(":"))
-    morning_end = appConfig["sh_sz_morning_trade_end"]
+    morning_end = appConfig["a_morning_trade_end"]
     morning_a_end_hour, morning_a_end_minute = map(int, morning_end.split(":"))
-    afternoon_a_start = appConfig["sh_sz_afternoon_trade_start"]
+    afternoon_a_start = appConfig["a_afternoon_trade_start"]
     afternoon_a_start_hour, afternoon_a_start_minute = map(int, afternoon_a_start.split(":"))
-    afternoon_a_end = appConfig["sh_sz_afternoon_trade_end"]
+    afternoon_a_end = appConfig["a_afternoon_trade_end"]
     afternoon_a_end_hour, afternoon_a_end_minute = map(int, afternoon_a_end.split(":"))
-    trade_day = appConfig["sh_sz_trade_day"]
+    trade_day = appConfig["a_trade_day"]
 
     # ========== 配置全天时段：9:20启动，16:20停止 ==========
     # scheduler.add_job(start_daily_task,"cron",day_of_week=trade_day,hour=daily_start_hour,minute=daily_start_minute,id="start_daily",name="启动全天任务")
