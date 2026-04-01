@@ -1,7 +1,7 @@
 import datetime
 import logging
 import time
-from data.sqllite import get_bar_data, insert_appending_order, get_pending_orders_symbol
+from data.sqllite import get_bar_data, insert_pending_order, get_pending_orders_symbol
 from src.trade_advisor import price_advice
 from src import state
 from src.grid_limit import grid_allow
@@ -12,20 +12,25 @@ from src.stack_limit import stack_support_buy, stack_support_sell
 
 def place_order_ths(symbol:str, qty, price, direction):
     test_logger = logging.getLogger("test_logger")
+    logger=logging.getLogger("place_order_ths")
     test_logger.info(f"✅ 在同花顺桌面版上操作：{direction} {symbol} ，数量：{qty} ，价格：{price}")
+    logger.info(f"✅ 在同花顺桌面版上操作：{direction} {symbol} ，数量：{qty} ，价格：{price}")
     pending_order={}
     if True:
         if direction=="Buy":
             pending_order={"symbol":symbol,"qty":qty,"price":price,"direction":direction,"timestamp":datetime.datetime.now().timestamp()}
         else:
             pending_order={"symbol":symbol,"qty":-qty,"price":price,"direction":direction,"timestamp":datetime.datetime.now().timestamp()}
-        insert_appending_order(pending_order)
+        logger.info(f"将挂单 {pending_order}插入到tbl_appending_order")
+        insert_pending_order(pending_order)
         state.t_pending_orders[symbol]=get_pending_orders_symbol(symbol)
     pass
 
 
 def place_order(symbol, qty, price, direction):
+    logger=logging.getLogger("place_order")
     test_logger = logging.getLogger("test_logger")
+    logger.info(f"place_order: {symbol} /数量：{qty}/ 价格：{price} / 方向：{direction}")
     if qty<=0:
         test_logger.info(f"挂单数量小于等于0，不操作挂单")
         return
@@ -40,10 +45,12 @@ def place_order(symbol, qty, price, direction):
 
 def sell_order_exist(symbol):
     test_logger = logging.getLogger("test_logger")
+    logger=logging.getLogger("sell_order_exist")
     symbol_pending=state.t_pending_orders[symbol]
     test_logger.info(f"目前存在的挂单：{symbol_pending}")
     result=any(order["symbol"]==symbol and order["direction"]=="Sell" for order in symbol_pending)
     test_logger.info(f"{symbol} 是否存在卖出订单: {result}")
+    logger.info(f"{symbol} 是否存在卖出订单: {result}")
     return result
 
 
@@ -60,23 +67,26 @@ def buy_order_exist(symbol):
 def place_orders():
     """你的核心业务逻辑（持续运行的任务）"""
     test_logger = logging.getLogger("test_logger")
+    logger=logging.getLogger("place_orders")
     test_logger.info(f"✅ place_orders任务启动 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
     # 循环执行核心逻辑，直到标志位被置为False
     while state.is_task_running:
         for symbol in state.t_symbols:
-            if symbol["platform"]=="ths" and state.is_task_running:
+            if symbol["exchange"]=="a" and state.is_in_a_period:
                 bar_data=get_bar_data(symbol["symbol"],0,datetime.datetime.now().timestamp())
                 # result = analyze_market_status(bar_data,symbol)
                 result=price_advice(bar_data,symbol)
                 signal, reason, price = result["signal"], result["reason"], result["price"]
                 test_logger.info(f"{symbol['symbol']} 分析结果：{signal} {reason} 价格：{price}")
+                logger.info(f"{symbol['symbol']} 分析结果：{signal} {reason} 价格：{price}")
                 with orders_lock:
                     if not sell_order_exist(symbol["symbol"]) and signal=="Sell":
                         qty_stack,stack_price,pos_qty=stack_support_sell(symbol,price)
                         qty_grid=grid_allow("Sell",symbol["symbol"],price,pos_qty)
                         if stack_price>round(bar_data[-1]["pre_close"]*(1+symbol["upper_limit"]),2):
                             test_logger.info(f"{symbol['symbol']} 卖出价格超过上轨，不操作挂单")
+                            logger.info(f"{symbol['symbol']} 卖出价格超过上轨，不操作挂单")
                             continue
                         # 执行卖出操作
                         place_order(symbol["symbol"], min(qty_stack,qty_grid),max(price,stack_price), "Sell")
@@ -87,6 +97,7 @@ def place_orders():
                         # 执行买入操作
                         if stack_price<round(bar_data[-1]["pre_close"]*(1-symbol["lower_limit"]),2):
                             test_logger.info(f"{symbol['symbol']} 买入价格低于下轨，不操作挂单")
+                            logger.info(f"{symbol['symbol']} 买入价格低于下轨，不操作挂单")
                             continue
                         # 执行买入操作
                         place_order(symbol["symbol"], min(qty_stack,qty_grid),min(price,stack_price), "Buy")

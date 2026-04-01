@@ -20,7 +20,7 @@ WINDOWS = {
 
 
 def price_advice(bar_data: list,symbol: Dict):
-    test_logger = logging.getLogger("test_logger")
+    logger = logging.getLogger("price_advice")
 
     if bar_data is None or len(bar_data)==0:
         return {
@@ -86,9 +86,6 @@ def price_advice(bar_data: list,symbol: Dict):
     elif long_!={} and long_["avg_vol"]>middle["avg_vol"]*2>short["avg_vol"]*2*2:
         volume_status="volume extremely shrink"
 
-    step=(highest_2d - lowest_2d) / 5
-    test_logger.info(f"两天最高价为{highest_2d},最低价为{lowest_2d},五分之一为：{step}")
-
 
     if volume_status == "volume explode":
         return {
@@ -97,6 +94,8 @@ def price_advice(bar_data: list,symbol: Dict):
             "reason":"长、中、短成交量翻倍中，主力停止后再操作"
         }
 
+    step = (highest_2d - lowest_2d) / 5
+    logger.info(f"两天最高价为{highest_2d},最低价为{lowest_2d},五分之一为：{step}")
     if highest_2d-step<last_second["price"]<highest_2d:
         return {
             "signal":"Sell",
@@ -110,6 +109,7 @@ def price_advice(bar_data: list,symbol: Dict):
             "reason":"价格处在两天最后五分位上，且没有明显放量，下跌企稳"
         }
     step = (highest_2d - lowest_2d) / 4
+    logger.info(f"两天最高价为{highest_2d},最低价为{lowest_2d},四分之一为：{step}")
     if volume_status == "volume extremely shrink" and highest_2d-step<last_second["price"]<highest_2d:
         return {
             "signal":"Sell",

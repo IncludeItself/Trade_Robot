@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="trade_robot.db" uuid="d28134b9-6694-4cca-90da-eaef99446c7e">
+    <data-source source="LOCAL" name="trade_robot.db" uuid="cb03bf64-de0e-4c78-bd90-134a9afb9ff8">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:D:\past\341234\Trade_Robot\data\trade_robot.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:E:\workplace\Trade_Robot\data\trade_robot.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

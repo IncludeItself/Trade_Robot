@@ -2,9 +2,10 @@ import datetime
 import logging
 import threading
 
+from api.api import get_bar_history
 from data.excel_data import get_symbols_from_excel, get_grid
 from data.sqllite import refresh_tbl_pending_order, refresh_tbl_bar_data, get_pending_orders, get_filled_orders, \
-    get_last_bar_datas
+    get_last_bar_datas, insert_bar_history
 from src.place_orders import place_orders
 from src.check_filled import check_filled
 from src.get_bar_data import get_bar_data
@@ -16,24 +17,36 @@ check_filled_thread = None  # 存储核心任务的线程对象
 get_bar_data_thread = None
 place_orders_thread = None
 
+
+def update_bar_history(t_symbols):
+    for symbol in t_symbols:
+        bar_history=get_bar_history(symbol["exchange"],symbol["pre_fix"],symbol["symbol"])
+        insert_bar_history(bar_history)
+    pass
+
+
 def daily_task():
     """每日任务，用于更新bar数据"""
+    logger = logging.getLogger()
+    logger.info(f"每天的初始任务开始，清理日数据表/更新网格/更新最后bar数据/ | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     refresh_tbl_pending_order()
     refresh_tbl_bar_data()
-    insert_bar_history()
+
+    state.t_symbols = get_symbols_from_excel()
+
+    update_bar_history(state.t_symbols)
+
+    state.t_pending_orders = get_pending_orders(state.t_symbols)
+    state.t_filled_orders = get_filled_orders(state.t_symbols)
+    # state.t_bar_data=get_bar_data_from_db(state.t_symbols)
+    state.t_grid = get_grid(state.t_symbols)
+    state.t_last_bar_data = get_last_bar_datas(state.t_symbols)
 
 def initialize():
 
     global check_filled_thread, get_bar_data_thread, place_orders_thread
     # 清理tbl_pending_order数据表
     daily_task()
-
-    state.t_symbols=get_symbols_from_excel()
-    state.t_pending_orders=get_pending_orders(state.t_symbols)
-    state.t_filled_orders=get_filled_orders(state.t_symbols)
-    # state.t_bar_data=get_bar_data_from_db(state.t_symbols)
-    state.t_grid=get_grid(state.t_symbols)
-    state.t_last_bar_data=get_last_bar_datas(state.t_symbols)
 
     state.is_task_running = True
     # 启动新线程运行核心任务（避免阻塞调度器）
@@ -56,6 +69,7 @@ def start_a_task():
     """定时启动核心任务的函数"""
     if not state.is_in_a_period:
         test_logger.info(f"A股已启动 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        logger.info(f"A股开盘，启动A股任务 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         state.is_in_a_period = True
     else:
         test_logger.info(f"⚠️ A股已在运行 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -63,9 +77,8 @@ def start_a_task():
 def end_a_task():
     """定时结束核心任务的函数"""
     logger = logging.getLogger()
-    logger.info(f"A股任务停止")
     if state.is_in_a_period:
-        print(f"A股已结束 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        logger.info(f"A股休市，结束A股任务 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         state.is_in_a_period = False
     else:
         print(f"⚠️ A股已结束 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")

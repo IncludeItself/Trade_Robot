@@ -209,10 +209,13 @@ def get_last_day_bar(symbol:str):
     """获取历史日K线数据"""
     conn = get_db_connection()
     cursor = conn.cursor()
+    # 获取今天日期的前的天的日期
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday_str = yesterday.strftime("%Y-%m-%d")
     select_sql = """
-        SELECT * FROM tbl_bar_data WHERE symbol=? order by timestamp desc limit 1
+        SELECT * FROM tbl_bar_data WHERE symbol=? and date=? order by timestamp desc limit 1
                  """
-    cursor.execute(select_sql, (symbol,))
+    cursor.execute(select_sql, (symbol,yesterday_str))
     conn.commit()
 
 def insert_bar_data(bar_data):
@@ -221,12 +224,12 @@ def insert_bar_data(bar_data):
     cursor = conn.cursor()
     insert_sql = """
     INSERT INTO tbl_bar_data 
-    (symbol, timestamp, price, pre_close, open, highest, lowest, volume, turnover,total_volume,total_turnover)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)
+    (symbol, timestamp,date,time, price, pre_close, open, highest, lowest, volume, turnover,total_volume,total_turnover)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?,?,?)
     """
     cursor.execute(
         insert_sql,
-        (bar_data["symbol"], bar_data["timestamp"], bar_data["price"], bar_data["pre_close"], bar_data["open"], bar_data["highest"], bar_data["lowest"], bar_data["volume"], bar_data["turnover"],bar_data["total_volume"],bar_data["total_turnover"])
+        (bar_data["symbol"], bar_data["timestamp"],bar_data["date"],bar_data["time"], bar_data["price"], bar_data["pre_close"], bar_data["open"], bar_data["highest"], bar_data["lowest"], bar_data["volume"], bar_data["turnover"],bar_data["total_volume"],bar_data["total_turnover"])
     )
     conn.commit()
     print(f"✅ 插入K线数据 {bar_data['symbol']} {bar_data['timestamp']} 成功")
@@ -257,7 +260,7 @@ def insert_filled_order(filled_order):
     conn.commit()
     print(f"✅ 插入成交记录 {filled_order['symbol']} {filled_order['timestamp']} 成功")
 
-def insert_appending_order(pending_order):
+def insert_pending_order(pending_order):
     """插入挂单"""
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -289,9 +292,21 @@ def update_tbl_filled_orders_symbol(filled_symbol):
     conn.commit()
     print(f"✅ 更新成交记录 {filled_symbol[0]['symbol']} 成功")
 
-def insert_bar_history():
+def insert_bar_history(bar_history):
     conn = get_db_connection()
     cursor = conn.cursor()
+    insert_sql = """
+    INSERT OR REPLACE INTO tbl_bar_history
+    (symbol, date, open, highest, lowest, close, volume, turnover)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """
+    cursor.execute(
+        insert_sql,
+        (bar_history["symbol"], bar_history["date"], float(bar_history["open"]), float(bar_history["highest"]), float(bar_history["lowest"]), float(bar_history["close"]), float(bar_history["volume"]), float(bar_history["turnover"]))
+    )
+    conn.commit()
+    print(f"✅ 更新历史数据： {bar_history['symbol']} {bar_history['date']} 成功")
+
 
 def insert_order(symbol, order_id, side, order_type, price, quantity, status):
     """插入订单数据，自动计算金额"""

@@ -11,6 +11,7 @@ from src import state
 def get_bar_data():
     """你的核心业务逻辑（持续运行的任务）"""
     test_logger = logging.getLogger("test_logger")
+    logger = logging.getLogger("get_bar_data")
     test_logger.info(f"✅ get bar data任务启动 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
     # 循环执行核心逻辑，直到标志位被置为False
@@ -30,6 +31,8 @@ def get_bar_data():
                     new_bar_data={
                         "symbol": symbol["symbol"],
                         "timestamp": bar_data["timestamp"],
+                        "date": bar_data["date"],
+                        "time": bar_data["time"],
                         "price": bar_data["price"],
                         "pre_close": bar_data["pre_close"],
                         "open": bar_data["open"],
@@ -41,6 +44,7 @@ def get_bar_data():
                         "total_turnover": bar_data["turnover"],
                     }
                     insert_bar_data(new_bar_data)
+                    logger.info(f"insert bar data: {new_bar_data}")
                     state.t_last_bar_data[symbol["symbol"]]=new_bar_data
         current_time = datetime.datetime.now().strftime("%H:%M:%S")
         test_logger.info(f"get bar data任务运行中 | 当前时间: {current_time}")

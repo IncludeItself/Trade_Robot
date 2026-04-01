@@ -1,3 +1,4 @@
+import logging
 
 import requests
 
@@ -14,6 +15,7 @@ def get_sina_stock(stock_code):
         "Connection": "keep-alive"
     }
 
+    logger=logging.getLogger("get_sina_stock")
     try:
         # 关闭重定向、添加超时
         response = requests.get(
@@ -27,6 +29,7 @@ def get_sina_stock(stock_code):
 
         if response.status_code == 200:
             data_str = response.text.split('"')[1]
+            logger.info(f"获取到的原始数据：{data_str}")
             data_list = data_str.split(',')
             # print(f"原始数据：\n"
             #       f"0.名称：{data_list[0]}\n"

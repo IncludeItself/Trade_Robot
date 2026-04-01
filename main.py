@@ -7,7 +7,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 from logs.logger import setup_logging
 from src.gui import create_main_window
-from src.start_end import start_a_task, end_a_task, stop_all_task, initialize
+from src.start_end import start_a_task, end_a_task, stop_all_task, initialize, daily_task
 from config.app_config import appConfig
 
 
@@ -19,10 +19,8 @@ def schedule_jobs(scheduler):
 
 
     # 获取a_morning_trade_start的小时和分钟
-    # daily_start = appConfig["start_time"]
-    # daily_start_hour, daily_start_minute = map(int, daily_start.split(":"))
-    # daily_end = appConfig["end_time"]
-    # daily_end_hour, daily_end_minute = map(int, daily_end.split(":"))
+    daily_start = appConfig["start_time"]
+    daily_start_hour, daily_start_minute = map(int, daily_start.split(":"))
     morning_a_start = appConfig["a_morning_trade_start"]
     morning_a_start_hour, morning_a_start_minute = map(int, morning_a_start.split(":"))
     morning_end = appConfig["a_morning_trade_end"]
@@ -34,7 +32,7 @@ def schedule_jobs(scheduler):
     trade_day = appConfig["a_trade_day"]
 
     # ========== 配置全天时段：9:20启动，16:20停止 ==========
-    # scheduler.add_job(start_daily_task,"cron",day_of_week=trade_day,hour=daily_start_hour,minute=daily_start_minute,id="start_daily",name="启动全天任务")
+    scheduler.add_job(daily_task,"cron",day_of_week=trade_day,hour=daily_start_hour,minute=daily_start_minute,id="start_daily",name="启动全天任务")
     # scheduler.add_job(stop_daily_task,"cron",day_of_week=trade_day,hour=daily_end_hour,minute=daily_end_minute,id="stop_daily",name="全天停止任务")
 
     # ========== 配置A股上午时段：9:30启动，11:30停止 ==========

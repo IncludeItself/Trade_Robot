@@ -11,6 +11,7 @@ from src.locks import orders_lock
 
 def update_tbl_filled_orders(pending_order):
     test_logger = logging.getLogger("test_logger")
+    logger=logging.getLogger("update_tbl_filled_orders")
     test_logger.info(f"{pending_order['symbol']} {pending_order['direction']} {pending_order['price']} 已成交")
     symbol_filled=state.t_filled_orders.get(pending_order["symbol"],[])
     if symbol_filled and len(symbol_filled)>0:
@@ -26,6 +27,7 @@ def update_tbl_filled_orders(pending_order):
         "pos_qty": old_pos+pending_order["qty"],
     }
     test_logger.info(f"插入新成交记录的filled_order：{filled}")
+    logger.info(f"插入新成交记录的filled_order：{filled}")
     insert_filled_order(filled)
     state.t_filled_orders[pending_order["symbol"]]=get_filled_orders_symbol(pending_order["symbol"])
 
@@ -40,17 +42,20 @@ def update_tbl_filled_orders(pending_order):
             for i in range(0,index+1):
                 filled_symbol[i]["cleared"]=1
             test_logger.info(f"结清{index+1}条成交记录，利润：{profit}")
+            logger.info(f"结清{index+1}条成交记录，利润：{profit}")
             # 将filled_symbol写入数据库
             update_tbl_filled_orders_symbol(filled_symbol)
             state.t_filled_orders[pending_order["symbol"]] = get_filled_orders_symbol(pending_order["symbol"])
             break
+
         index+=1
 
     pass
 
 
 def update_tbl_pending_orders(pending_order):
-
+    logger=logging.getLogger("update_tbl_pending_orders")
+    logger.info(f"删除挂单{pending_order['id']}")
     delete_tbl_pending_orders(pending_order["id"])
     state.t_pending_orders[pending_order["symbol"]]=get_pending_orders_symbol(pending_order["symbol"])
     update_tbl_filled_orders(pending_order)
@@ -60,6 +65,7 @@ def update_tbl_pending_orders(pending_order):
 def check_filled():
     """你的核心业务逻辑（持续运行的任务）"""
     test_logger = logging.getLogger("test_logger")
+    logger = logging.getLogger("check_filled")
     test_logger.info(f"✅ check_filled任务启动 | 时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     # 循环执行核心逻辑，直到标志位被置为False
     while state.is_task_running:
@@ -77,6 +83,7 @@ def check_filled():
                         if pending_order["direction"]=="Sell" and any(bar["price"]>pending_order["price"] for bar in bars) or pending_order["direction"]=="Buy" and any(bar["price"]<pending_order["price"] for bar in bars):
                             with orders_lock:
                                 test_logger.info(f"{pending_order['symbol']} {pending_order['direction']} {pending_order['price']} 已经成交")
+                                logger.info(f"订单{pending_order}已成交")
                                 # 已经成交
                                 update_tbl_pending_orders(pending_order)
                             continue

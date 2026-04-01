@@ -23,8 +23,8 @@ LOG_CONFIG = {
         "test_logger_enabled": False
     },
     "PROD": {
-        "level": logging.DEBUG,  # 生产环境只输出警告及以上WARNING
-        "console": True,  # 生产环境禁用控制台输出
+        "level": logging.WARNING,  # 生产环境只输出警告及以上WARNING
+        "console": False,  # 生产环境禁用控制台输出
         "file": True,
         "file_path": "logs/prod.log",
         "max_bytes": 10 * 1024 * 1024,  # 日志文件最大 10MB
