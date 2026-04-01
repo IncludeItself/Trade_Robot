@@ -10,7 +10,7 @@ from src.place_orders import place_orders
 from src.check_filled import check_filled
 from src.get_bar_data import get_bar_data
 from src import state
-
+from wecom.wecom import send_wecom_msg
 
 # 全局标志位：控制核心任务的运行/停止
 check_filled_thread = None  # 存储核心任务的线程对象
@@ -29,6 +29,7 @@ def daily_task():
     """每日任务，用于更新bar数据"""
     logger = logging.getLogger()
     logger.info(f"每天的初始任务开始，清理日数据表/更新网格/更新最后bar数据/ | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    send_wecom_msg("每天的初始任务开始，清理日数据表/更新网格/更新最后bar数据/")
     refresh_tbl_pending_order()
     refresh_tbl_bar_data()
 
@@ -69,6 +70,7 @@ def start_a_task():
     """定时启动核心任务的函数"""
     if not state.is_in_a_period:
         test_logger.info(f"A股已启动 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        send_wecom_msg("A股开盘，启动A股任务")
         logger.info(f"A股开盘，启动A股任务 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         state.is_in_a_period = True
     else:
@@ -78,6 +80,7 @@ def end_a_task():
     """定时结束核心任务的函数"""
     logger = logging.getLogger()
     if state.is_in_a_period:
+        send_wecom_msg("A股休市，结束A股任务")
         logger.info(f"A股休市，结束A股任务 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         state.is_in_a_period = False
     else:

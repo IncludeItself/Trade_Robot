@@ -9,6 +9,7 @@ from logs.logger import setup_logging
 from src.gui import create_main_window
 from src.start_end import start_a_task, end_a_task, stop_all_task, initialize, daily_task
 from config.app_config import appConfig
+from wecom.wecom import send_wecom_msg
 
 
 def schedule_jobs(scheduler):
@@ -134,6 +135,7 @@ def main():
     except (KeyboardInterrupt, SystemExit):
         # 停止调度器时，确保核心任务也停止
         stop_all_task()
+        send_wecom_msg("定时任务调度器已停止")
         scheduler.shutdown()
         print("\n✅ 调度器已停止，所有任务已清理")
 

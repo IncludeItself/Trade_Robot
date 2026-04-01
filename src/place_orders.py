@@ -8,6 +8,7 @@ from src.grid_limit import grid_allow
 from src.locks import orders_lock
 from src.price_volume_analyzer import analyze_market_status
 from src.stack_limit import stack_support_buy, stack_support_sell
+from wecom.wecom import send_wecom_msg
 
 
 def place_order_ths(symbol:str, qty, price, direction):
@@ -28,6 +29,7 @@ def place_order_ths(symbol:str, qty, price, direction):
 
 
 def place_order(symbol, qty, price, direction):
+
     logger=logging.getLogger("place_order")
     test_logger = logging.getLogger("test_logger")
     logger.info(f"place_order: {symbol} /数量：{qty}/ 价格：{price} / 方向：{direction}")
@@ -40,6 +42,8 @@ def place_order(symbol, qty, price, direction):
         return
     # 执行订单操作
     if symbol_info["platform"]=="ths":
+        send_wecom_msg(f"place_order in ths: {symbol} /数量：{qty}/ 价格：{price} / 方向：{direction}")
+        logger.info(f"place_order in ths: {symbol} /数量：{qty}/ 价格：{price} / 方向：{direction}")
         place_order_ths(symbol, qty, price, direction)
 
 
@@ -102,10 +106,6 @@ def place_orders():
                         # 执行买入操作
                         place_order(symbol["symbol"], min(qty_stack,qty_grid),min(price,stack_price), "Buy")
 
-        # ========== 这里写你的核心业务代码 ==========
-        # 示例：每秒打印一次运行状态（替换为你的实际逻辑）
-        current_time = datetime.datetime.now().strftime("%H:%M:%S")
-        test_logger.info(f"place_orders任务运行中 | 当前时间: {current_time}")
         time.sleep(10)  # 模拟业务执行间隔，根据你的需求调整
 
     print(f"❌ place_orders任务停止 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")

@@ -70,4 +70,5 @@ def get_sina_stock(stock_code):
             return f"请求失败，状态码：{response.status_code}"
 
     except Exception as e:
+        logger.info(f"查询异常：{str(e)}")
         return f"查询异常：{str(e)}"

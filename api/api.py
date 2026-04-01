@@ -43,7 +43,7 @@ def get_symbol_bar_data(exchange,stock_code):
             "sell4": float(data[0]["sell4"]),
             "sell5": float(data[0]["sell5"]),
             "volume": float(data[0]["volume"]),
-            "turnover": float(data[0]["turnover"])
+            "value": float(data[0]["value"])
         }
     if exchange.lower() == "a":
         data_list = get_sina_stock(stock_code)
@@ -60,17 +60,17 @@ def get_symbol_bar_data(exchange,stock_code):
             "highest": float(data_list[4]),
             "lowest": float(data_list[5]),
             "buy1": float(data_list[6]),
-            "buy2": float(data_list[7]),
-            "buy3": float(data_list[8]),
-            "buy4": float(data_list[9]),
-            "buy5": float(data_list[10]),
-            "sell1": float(data_list[11]),
-            "sell2": float(data_list[12]),
-            "sell3": float(data_list[13]),
-            "sell4": float(data_list[14]),
-            "sell5": float(data_list[15]),
-            "volume": float(data_list[16]),
-            "turnover": float(data_list[17])
+            "buy2": float(data_list[13]),
+            "buy3": float(data_list[15]),
+            "buy4": float(data_list[17]),
+            "buy5": float(data_list[19]),
+            "sell1": float(data_list[7]),
+            "sell2": float(data_list[21]),
+            "sell3": float(data_list[23]),
+            "sell4": float(data_list[25]),
+            "sell5": float(data_list[27]),
+            "volume": float(data_list[8]),
+            "value": float(data_list[9])
         }
     return None
 
@@ -97,6 +97,6 @@ def get_bar_history(exchange,prefix,symbol):
             # "sell4": float(data_list[14]),
             # "sell5": float(data_list[15]),
             "volume": float(data_list[16]),
-            "turnover": float(data_list[17])
+            "value": float(data_list[17])
         }
     return None

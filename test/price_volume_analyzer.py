@@ -23,7 +23,7 @@
 #     """
 #     核心分析函数：输入盘口数据表，输出完整状态+买卖信号
 #     :param symbol: 股票代码字典，包含"symbol"和"platform"等
-#     :param bar_data: 包含 timestamp, price, pre_close, volume, turnover, highest, lowest
+#     :param bar_data: 包含 timestamp, price, pre_close, volume, value, highest, lowest
 #     :return: 完整分析结果字典
 #     """
 #     # ======================
@@ -243,7 +243,7 @@
 #         "highest": np.random.normal(10.1, 0.1, 70),
 #         "lowest": np.random.normal(9.9, 0.1, 70),
 #         "volume": np.arange(1000, 1070, 1),
-#         "turnover": np.arange(10000, 10700, 1)
+#         "value": np.arange(10000, 10700, 1)
 #     }
 #     # 你的全局变量
 #     state = type('obj', (object,), {

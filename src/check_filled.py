@@ -7,6 +7,7 @@ from data.sqllite import get_bar_data, delete_tbl_pending_orders, insert_filled_
     get_pending_orders_symbol, update_tbl_filled_orders_symbol
 from src import state
 from src.locks import orders_lock
+from wecom.wecom import send_wecom_msg
 
 
 def update_tbl_filled_orders(pending_order):
@@ -43,6 +44,7 @@ def update_tbl_filled_orders(pending_order):
                 filled_symbol[i]["cleared"]=1
             test_logger.info(f"结清{index+1}条成交记录，利润：{profit}")
             logger.info(f"结清{index+1}条成交记录，利润：{profit}")
+            send_wecom_msg(f"结清{index+1}条成交记录，利润：{profit}")
             # 将filled_symbol写入数据库
             update_tbl_filled_orders_symbol(filled_symbol)
             state.t_filled_orders[pending_order["symbol"]] = get_filled_orders_symbol(pending_order["symbol"])
@@ -70,7 +72,7 @@ def check_filled():
     # 循环执行核心逻辑，直到标志位被置为False
     while state.is_task_running:
         for symbol_info in state.t_symbols:
-            if symbol_info["platform"]=="ths" and state.is_task_running:
+            if symbol_info["platform"]=="ths" and state.is_in_a_period:
                 pending_orders=state.t_pending_orders[symbol_info["symbol"]]
                 test_logger.info(f"{symbol_info['symbol']}当前有 {len(pending_orders)} 条挂单：{pending_orders}")
                 for pending_order in pending_orders:
@@ -84,17 +86,11 @@ def check_filled():
                             with orders_lock:
                                 test_logger.info(f"{pending_order['symbol']} {pending_order['direction']} {pending_order['price']} 已经成交")
                                 logger.info(f"订单{pending_order}已成交")
+                                send_wecom_msg(f"订单{pending_order}已成交")
                                 # 已经成交
                                 update_tbl_pending_orders(pending_order)
                             continue
 
-
-
-
-        # ========== 这里写你的核心业务代码 ==========
-        # 示例：每秒打印一次运行状态（替换为你的实际逻辑）
-        current_time = datetime.now().strftime("%H:%M:%S")
-        print(f"check_filled任务运行中 | 当前时间: {current_time}", end="\r")
         time.sleep(6)  # 模拟业务执行间隔，根据你的需求调整
 
     print(f"❌ check_filled任务停止 | 时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")

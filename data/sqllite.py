@@ -53,16 +53,21 @@ def init_tables():
     create_bar_data_table_sql = """
         create table if not exists tbl_bar_data
         (
-            id        integer not null primary key autoincrement,
-            symbol       TEXT not null,
-            timestamp integer not null,
-            price     REAL    not null,
-            pre_close REAL    not null,
-            open      REAL    not null,
-            highest   REAL    not null,
-            lowest    REAL    not null,
-            volume    REAL    not null,
-            turnover  REAL    not null
+            id           integer           not null
+        primary key autoincrement,
+        symbol       TEXT              not null,
+        timestamp    integer           not null,
+        price        REAL              not null,
+        pre_close    REAL              not null,
+        open         REAL              not null,
+        highest      REAL              not null,
+        lowest       REAL              not null,
+        volume       REAL              not null,
+        value        REAL              not null,
+        total_volume REAL default 0    not null,
+        total_value  REAL default 0    not null,
+        date         TEXT default DATE not null,
+        time         TEXT default TIME not null
         );
     """
     cursor.execute(create_bar_data_table_sql)
@@ -86,16 +91,16 @@ def init_tables():
 
     # 5. 创建tbl_bar_history
     create_bar_history_table_sql = """
-    create table if not exists tbl_bar_history_dg_tmp
+    create table if not exists tbl_bar_history
         (
-            symbol   TEXT not null,
-            open     REAL not null,
-            highest  REAL not null,
-            lowest   REAL not null,
-            close    REAL not null,
-            volume   REAL not null,
-            turnover REAL not null,
-            date     text not null,
+            symbol  TEXT not null,
+            open    REAL not null,
+            highest REAL not null,
+            lowest  REAL not null,
+            close   REAL not null,
+            volume  REAL not null,
+            value   REAL not null,
+            date    text not null,
             constraint tbl_bar_history_pk
                 primary key (symbol, date)
         );
@@ -224,12 +229,12 @@ def insert_bar_data(bar_data):
     cursor = conn.cursor()
     insert_sql = """
     INSERT INTO tbl_bar_data 
-    (symbol, timestamp,date,time, price, pre_close, open, highest, lowest, volume, turnover,total_volume,total_turnover)
+    (symbol, timestamp,date,time, price, pre_close, open, highest, lowest, volume, value,total_volume,total_value)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?,?,?)
     """
     cursor.execute(
         insert_sql,
-        (bar_data["symbol"], bar_data["timestamp"],bar_data["date"],bar_data["time"], bar_data["price"], bar_data["pre_close"], bar_data["open"], bar_data["highest"], bar_data["lowest"], bar_data["volume"], bar_data["turnover"],bar_data["total_volume"],bar_data["total_turnover"])
+        (bar_data["symbol"], bar_data["timestamp"],bar_data["date"],str(bar_data["time"]), bar_data["price"], bar_data["pre_close"], bar_data["open"], bar_data["highest"], bar_data["lowest"], bar_data["volume"], bar_data["value"],bar_data["total_volume"],bar_data["total_value"])
     )
     conn.commit()
     print(f"✅ 插入K线数据 {bar_data['symbol']} {bar_data['timestamp']} 成功")
@@ -297,12 +302,12 @@ def insert_bar_history(bar_history):
     cursor = conn.cursor()
     insert_sql = """
     INSERT OR REPLACE INTO tbl_bar_history
-    (symbol, date, open, highest, lowest, close, volume, turnover)
+    (symbol, date, open, highest, lowest, close, volume, value)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     """
     cursor.execute(
         insert_sql,
-        (bar_history["symbol"], bar_history["date"], float(bar_history["open"]), float(bar_history["highest"]), float(bar_history["lowest"]), float(bar_history["close"]), float(bar_history["volume"]), float(bar_history["turnover"]))
+        (bar_history["symbol"], bar_history["date"], float(bar_history["open"]), float(bar_history["highest"]), float(bar_history["lowest"]), float(bar_history["close"]), float(bar_history["volume"]), float(bar_history["value"]))
     )
     conn.commit()
     print(f"✅ 更新历史数据： {bar_history['symbol']} {bar_history['date']} 成功")

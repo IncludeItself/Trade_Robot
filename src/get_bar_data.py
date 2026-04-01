@@ -18,8 +18,6 @@ def get_bar_data():
 
     test_logger.info(f"is_task_running: {state.is_task_running}")
     while state.is_task_running:
-        test_logger.info(f"is_in_a_period: {state.is_in_a_period}")
-        test_logger.info(f"state.t_symbols: {state.t_symbols}")
         for symbol in state.t_symbols:
             last_bar_data=state.t_last_bar_data.get(symbol["symbol"],None)
             if last_bar_data or last_bar_data is None:
@@ -39,21 +37,19 @@ def get_bar_data():
                         "highest": bar_data["highest"],
                         "lowest": bar_data["lowest"],
                         "volume": bar_data["volume"]-last_bar_data["total_volume"] if last_bar_data else bar_data["volume"],
-                        "turnover": bar_data["turnover"]-last_bar_data["total_turnover"] if last_bar_data else bar_data["turnover"],
+                        "value": bar_data["value"]-last_bar_data["total_value"] if last_bar_data else bar_data["value"],
                         "total_volume": bar_data["volume"],
-                        "total_turnover": bar_data["turnover"],
+                        "total_value": bar_data["value"],
                     }
                     insert_bar_data(new_bar_data)
                     logger.info(f"insert bar data: {new_bar_data}")
                     state.t_last_bar_data[symbol["symbol"]]=new_bar_data
-        current_time = datetime.datetime.now().strftime("%H:%M:%S")
-        test_logger.info(f"get bar data任务运行中 | 当前时间: {current_time}")
 
             # 获取所有股票代码
             # symbol_list = get_symbol_bar_data()
 
 
 
-        time.sleep(5)  # 模拟业务执行间隔，根据你的需求调整
+        time.sleep(6)  # 模拟业务执行间隔，根据你的需求调整
 
     test_logger.info(f"❌ get bar data任务停止 | 时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")

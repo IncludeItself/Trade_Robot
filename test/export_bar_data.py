@@ -19,7 +19,7 @@ def export_bar_data_to_excel():
     try:
         # 查询所有数据
         query = """
-            SELECT symbol, timestamp, price, pre_close, open, highest, lowest, volume, turnover
+            SELECT symbol, timestamp, price, pre_close, open, highest, lowest, volume, value
             FROM tbl_bar_data
             ORDER BY symbol, timestamp
         """
@@ -31,7 +31,7 @@ def export_bar_data_to_excel():
             return
         
         # 将数据转换为DataFrame
-        df = pd.DataFrame(rows, columns=['symbol', 'timestamp', 'price', 'pre_close', 'open', 'highest', 'lowest', 'volume', 'turnover'])
+        df = pd.DataFrame(rows, columns=['symbol', 'timestamp', 'price', 'pre_close', 'open', 'highest', 'lowest', 'volume', 'value'])
         
         # 转换timestamp为日期格式，用于分组
         df['date'] = pd.to_datetime(df['timestamp'], unit='s').dt.strftime('%Y%m%d')
@@ -40,10 +40,10 @@ def export_bar_data_to_excel():
         for (symbol, date), group in df.groupby(['symbol', 'date']):
             # 计算累计成交量和成交额
             group['total_volume'] = group['volume'].cumsum()
-            group['total_turnover'] = group['turnover'].cumsum()
+            group['total_value'] = group['value'].cumsum()
             
             # 选择需要的字段
-            export_df = group[['symbol', 'timestamp', 'price', 'pre_close', 'open', 'highest', 'lowest', 'volume', 'turnover', 'total_volume', 'total_turnover']]
+            export_df = group[['symbol', 'timestamp', 'price', 'pre_close', 'open', 'highest', 'lowest', 'volume', 'value', 'total_volume', 'total_value']]
             
             # 生成文件名
             filename = f"{symbol}_{date}.xlsx"

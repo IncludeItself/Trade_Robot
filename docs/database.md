@@ -32,19 +32,21 @@ create table if not exists tbl_symbols
 ```sql
 create table if not exists tbl_bar_data
     (
-        id             integer        not null
-            primary key autoincrement,
-        symbol         TEXT           not null,
-        timestamp      integer        not null,
-        price          REAL           not null,
-        pre_close      REAL           not null,
-        open           REAL           not null,
-        highest        REAL           not null,
-        lowest         REAL           not null,
-        volume         REAL           not null,
-        turnover       REAL           not null,
-        total_volume   REAL default 0 not null,
-        total_turnover REAL default 0 not null
+        id           integer           not null
+        primary key autoincrement,
+        symbol       TEXT              not null,
+        timestamp    integer           not null,
+        price        REAL              not null,
+        pre_close    REAL              not null,
+        open         REAL              not null,
+        highest      REAL              not null,
+        lowest       REAL              not null,
+        volume       REAL              not null,
+        value        REAL              not null,
+        total_volume REAL default 0    not null,
+        total_value  REAL default 0    not null,
+        date         TEXT default DATE not null,
+        time         TEXT default TIME not null
     );
 ```
 
@@ -65,17 +67,17 @@ create table if not exists tbl_filled_orders
 
 ### tbl_bar_history
 ```sql
-create table if not exists tbl_bar_history_dg_tmp
+create table if not exists tbl_bar_history
     (
-        symbol   TEXT not null,
-        open     REAL not null,
-        highest  REAL not null,
-        lowest   REAL not null,
-        close    REAL not null,
-        volume   REAL not null,
-        turnover REAL not null,
-        date     text not null,
+        symbol  TEXT not null,
+        open    REAL not null,
+        highest REAL not null,
+        lowest  REAL not null,
+        close   REAL not null,
+        volume  REAL not null,
+        value   REAL not null,
+        date    text not null,
         constraint tbl_bar_history_pk
-            primary key (symbol, date)
+        primary key (symbol, date)
     );
 ```

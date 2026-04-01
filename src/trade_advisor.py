@@ -15,7 +15,7 @@ from src.state import get_period
 WINDOWS = {
     "short": 10,   # 短周期：即时盘口变化
     "middle": 30,  # 中周期：主力资金趋势
-    "long": 60     # 长周期：阶段趋势
+    "long": 120     # 长周期：阶段趋势
 }
 
 
@@ -49,7 +49,7 @@ def price_advice(bar_data: list,symbol: Dict):
         if cum_volume==0:
             ma=prices[-1]
         else:
-            ma=(win_df.iloc[-1]["total_turnover"]-win_df.iloc[0]["total_turnover"])/cum_volume
+            ma=(win_df.iloc[-1]["total_value"]-win_df.iloc[0]["total_value"])/cum_volume
         # ========== 成交量指标 ==========
         # 窗口平均成交量
         avg_vol = volumes.mean()
