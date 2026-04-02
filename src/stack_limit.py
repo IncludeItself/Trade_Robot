@@ -32,10 +32,12 @@ def stack_support_sell(symbol,price):
     if best_qty>0:
         logger.info(f"存在数量：{best_qty}，成本价格为{unit_cost}的持仓订单，乘以least_profit {1+ symbol["least_profit"]}，得到价格为{round(unit_cost * (1+ symbol["least_profit"]), 2)}")
         return best_qty, round(unit_cost * (1+ symbol["least_profit"]), 2), pos_qty
-    else:
-        test_logger.info(f"{symbol['symbol']} 最近一次成交为卖单，价格为{filled_orders[0]['price']}，加上step_rate，现在挂卖单价格为{round(filled_orders[0]["price"]*(1+ symbol["step_rate"]), 2)}")
-        logger.info(f"{symbol['symbol']} 最近一次成交为卖单，价格为{filled_orders[0]['price']}，现在挂卖单价格为{round(filled_orders[0]["price"]*(1+ symbol["step_rate"]), 2)}")
+    elif price>filled_orders[0]["price"]*(1+ symbol["step_rate"]):
+        logger.info(f"{symbol['symbol']} 最近一次成交为卖单，价格{filled_orders[0]['price']}*(1+ symbol['step_rate'])，小于现价{price}，要挂卖单")
         return symbol["least_trade_qty"], round(filled_orders[0]["price"]*(1+ symbol["step_rate"]), 2), pos_qty
+    else:
+        logger.info(f"{symbol['symbol']} 最近一次成交为卖单，价格为{filled_orders[0]['price']}，要在更高的价格卖才行")
+        return 0, round(filled_orders[0]["price"]*(1+ symbol["step_rate"]), 2), pos_qty
 
 
 
@@ -67,7 +69,10 @@ def stack_support_buy(symbol,price):
     if best_qty<0:
         logger.info(f"存在数量：{best_qty}，成本价格为{unit_cost}的持仓订单，乘以least_profit {1- symbol["least_profit"]}，得到价格为{round(unit_cost * (1- symbol["least_profit"]), 2)}")
         return -best_qty,round(unit_cost*(1-symbol["least_profit"]),2),pos_qty
+    elif price<filled_orders[0]["price"]*(1- symbol["step_rate"]):
+        logger.info(f"{symbol['symbol']} 最近一次成交为买单，价格{filled_orders[0]['price']}*(1- symbol['step_rate'])，大于现价{price}，要挂买单")
+        return symbol["least_trade_qty"], round(filled_orders[0]["price"]*(1- symbol["step_rate"]), 2), pos_qty
     else:
         test_logger.info(f"{symbol['symbol']} 最近一次成交为买单，价格为{filled_orders[0]['price']}，加上step_rate，现在挂买单价格为{round(filled_orders[0]["price"]*(1- symbol["step_rate"]), 2)}，")
         logger.info(f"{symbol['symbol']} 最近一次成交为买单，价格为{filled_orders[0]['price']}，现在挂买单价格为{round(filled_orders[0]["price"] * (1 - symbol["step_rate"]), 2)}")
-        return symbol["least_trade_qty"],round(filled_orders[0]["price"]*(1- symbol["step_rate"]), 2),pos_qty
+        return 0,round(filled_orders[0]["price"]*(1- symbol["step_rate"]), 2),pos_qty

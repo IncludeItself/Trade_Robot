@@ -237,7 +237,7 @@ def insert_bar_data(bar_data):
         (bar_data["symbol"], bar_data["timestamp"],bar_data["date"],str(bar_data["time"]), bar_data["price"], bar_data["pre_close"], bar_data["open"], bar_data["highest"], bar_data["lowest"], bar_data["volume"], bar_data["value"],bar_data["total_volume"],bar_data["total_value"])
     )
     conn.commit()
-    print(f"✅ 插入K线数据 {bar_data['symbol']} {bar_data['timestamp']} 成功")
+    # print(f"✅ 插入K线数据 {bar_data['symbol']} {bar_data['timestamp']} 成功")
 
 def delete_tbl_pending_orders(symbol_id):
     """删除一条记录"""

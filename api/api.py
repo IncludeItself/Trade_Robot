@@ -96,7 +96,7 @@ def get_bar_history(exchange,prefix,symbol):
             # "sell3": float(data_list[13]),
             # "sell4": float(data_list[14]),
             # "sell5": float(data_list[15]),
-            "volume": float(data_list[16]),
-            "value": float(data_list[17])
+            "volume": float(data_list[8]),
+            "value": float(data_list[9])
         }
     return None
