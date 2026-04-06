@@ -69,12 +69,12 @@ def price_advice_bn(kline_data: list, symbol: Dict) -> dict:
         signal = "Wait"
         reason = f"观望：4小时区间【{low_4h:.4f} ~ {high_4h:.4f}】，无买卖点"
 
-    if signal == "Sell":
-        put_price=current_price*1.0005
-    else:
-        put_price=current_price*0.9995
+    # if signal == "Sell":
+    #     put_price=current_price*1.0005
+    # else:
+    #     put_price=current_price*0.9995
     return {
         "signal": signal,
-        "price": round(put_price, 8),
+        "price": round(current_price, 3),
         "reason": reason
     }
