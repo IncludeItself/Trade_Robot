@@ -4,6 +4,7 @@ from typing import Dict
 import numpy as np
 import pandas as pd
 
+from api.bnapi import BnApi
 from config.app_config import appConfig
 from src import state
 from src.state import get_period
@@ -19,7 +20,7 @@ WINDOWS = {
 }
 
 
-def price_advice(bar_data: list,symbol: Dict):
+def price_advice_a(bar_data: list, symbol: Dict):
     logger = logging.getLogger("price_advice")
 
     if bar_data is None or len(bar_data)==0:
@@ -142,3 +143,5 @@ def price_advice(bar_data: list,symbol: Dict):
         "reason":"暂无明显的买卖点"
     }
     pass
+
+

@@ -16,6 +16,13 @@ class EnvConfig:
     HTTP_BACKOFF_FACTOR = float(os.getenv('HTTP_BACKOFF_FACTOR', '1'))
 
     @property
+    def proxy_http(self):
+        return os.getenv('PROXY_HTTP', '')
+    @property
+    def proxy_https(self):
+        return os.getenv('PROXY_HTTPS', '')
+
+    @property
     def api_key(self):
         """根据当前环境返回API Key"""
         if self.ENVIRONMENT == 'PROD':

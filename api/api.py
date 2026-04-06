@@ -1,6 +1,8 @@
 import logging
 
 from datetime import datetime
+
+from api.bnapi import BnApi
 from config.env_config import config
 from logs import logger
 from mock.excel import excel_to_dict_list
@@ -47,7 +49,7 @@ def get_symbol_bar_data(exchange,stock_code):
         }
     if exchange.lower() == "a":
         data_list = get_sina_stock(stock_code)
-        timestamp = int(datetime.strptime(data_list[30] + " " + data_list[31], "%Y-%m-%d %H:%M:%S").timestamp())
+        timestamp = datetime.strptime(data_list[30] + " " + data_list[31], "%Y-%m-%d %H:%M:%S").timestamp()
         return {
             "code": stock_code,
             "name": data_list[0],
@@ -72,12 +74,43 @@ def get_symbol_bar_data(exchange,stock_code):
             "volume": float(data_list[8]),
             "value": float(data_list[9])
         }
+    elif exchange.lower() == "bn":
+        try:
+            bn = BnApi()
+            line = bn.client.futures_klines(symbol=stock_code, interval='5m', limit=1)
+            # logger.info(f"get bar data bn: {line}")
+            if line and len(line) > 0:
+                timestamp = line[0][0] / 1000
+                date = datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d")
+                time = datetime.fromtimestamp(timestamp).strftime("%H:%M:%S")
+                return {
+                    "code": stock_code,
+                    "timestamp": timestamp,
+                    "price": line[0][4],
+                    "pre_close": line[0][1],
+                    "open": line[0][1],
+                    "highest": line[0][2],
+                    "lowest": line[0][3],
+                    "volume": line[0][5],
+                    "value": line[0][7],
+                    "total_volume": 0,
+                    "total_value": 0,
+                    "date": date,
+                    "time": time,
+                }
+            else:
+                return None
+
+        except Exception as e:
+            logger.error(f"get bar data bn error: {e}")
+            return None
     return None
 
 
 def get_bar_history(exchange,prefix,symbol):
     if exchange.lower() == "a":
         data_list = get_sina_stock(prefix+symbol)
+
         return {
             "symbol": symbol,
             "date": data_list[30],

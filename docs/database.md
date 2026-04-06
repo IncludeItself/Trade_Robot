@@ -6,8 +6,7 @@ create table if not exists tbl_pending_orders
         symbol          TEXT    not null,
         qty             REAL    not null,
         price           REAL    not null,
-        order_id_to_clr integer,
-        timestamp       integer not null,
+        timestamp       REAL not null,
         id              integer not null
             constraint tbl_pending_order_pk
                 primary key,
@@ -35,7 +34,7 @@ create table if not exists tbl_bar_data
         id           integer           not null
         primary key autoincrement,
         symbol       TEXT              not null,
-        timestamp    integer           not null,
+        timestamp    REAL           not null,
         price        REAL              not null,
         pre_close    REAL              not null,
         open         REAL              not null,
@@ -54,14 +53,17 @@ create table if not exists tbl_bar_data
 ```sql
 create table if not exists tbl_filled_orders
     (
-        id        integer not null
+        id         integer        not null
             constraint tbl_filled_orders_pk
                 primary key autoincrement,
-        timestamp integer not null,
-        symbol    TEXT    not null,
-        quantity  integer not null,
-        price     REAL    not null,
-        pos_qty   REAL    not null
+        timestamp  REAL        not null,
+        symbol     TEXT           not null,
+        quantity   REAL        not null,
+        price      REAL           not null,
+        pos_qty    REAL           not null,
+        cleared    INT  default 0 not null,
+        amount     REAL default 0 not null,
+        commission real default 0 not null
     );
 ```
 
@@ -78,6 +80,6 @@ create table if not exists tbl_bar_history
         value   REAL not null,
         date    text not null,
         constraint tbl_bar_history_pk
-        primary key (symbol, date)
+            primary key (symbol, date)
     );
 ```

@@ -8,6 +8,7 @@ is_task_running = False
 is_in_a_period = False
 is_in_h_period = False
 is_in_us_period = False
+is_in_bn_period = False
 
 t_symbols = []
 t_pending_orders={}
@@ -21,6 +22,9 @@ t_last_bar_history={}
 
 # 可交易时间
 t_period= {}
+
+# 成交记录的最大时间戳
+t_filled_timestamp={}
 
 
 def get_last_bar_history(symbol:str):

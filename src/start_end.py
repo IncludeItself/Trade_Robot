@@ -5,7 +5,7 @@ import threading
 from api.api import get_bar_history
 from data.excel_data import get_symbols_from_excel, get_grid
 from data.sqllite import refresh_tbl_pending_order, refresh_tbl_bar_data, get_pending_orders, get_filled_orders, \
-    get_last_bar_datas, insert_bar_history
+    get_last_bar_datas, insert_bar_history, get_filled_timestamp
 from src.place_orders import place_orders
 from src.check_filled import check_filled
 from src.get_bar_data import get_bar_data
@@ -21,7 +21,8 @@ place_orders_thread = None
 def update_bar_history(t_symbols):
     for symbol in t_symbols:
         bar_history=get_bar_history(symbol["exchange"],symbol["pre_fix"],symbol["symbol"])
-        insert_bar_history(bar_history)
+        if bar_history is not None:
+            insert_bar_history(bar_history)
     pass
 
 
@@ -43,6 +44,9 @@ def daily_task():
     state.t_grid = get_grid(state.t_symbols)
     state.t_last_bar_data = get_last_bar_datas(state.t_symbols)
 
+
+
+
 def initialize():
 
     global check_filled_thread, get_bar_data_thread, place_orders_thread
@@ -50,6 +54,10 @@ def initialize():
     daily_task()
 
     state.is_task_running = True
+    # 币安24小时不间断运行
+    state.is_in_bn_period = True
+    # 获取各symbol的最新成交时间戳
+    state.t_filled_timestamp=get_filled_timestamp(state.t_symbols)
     # 启动新线程运行核心任务（避免阻塞调度器）
     check_filled_thread = threading.Thread(target=check_filled)
     check_filled_thread.daemon = True  # 守护线程，主程序退出时自动结束

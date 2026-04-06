@@ -24,7 +24,7 @@ def stack_support_sell(symbol,price):
     best_qty = 0
     while count < len(filled_orders):
         qty += filled_orders[count]["quantity"]
-        amt += filled_orders[count]["price"]*filled_orders[count]["quantity"]
+        amt += filled_orders[count]["amount"]+filled_orders[count]["commission"]
         if qty > 0 and unit_cost > abs(amt / qty):
             unit_cost = abs(amt / qty)
             best_qty = qty
@@ -61,7 +61,7 @@ def stack_support_buy(symbol,price):
     best_qty=0
     while count<len(filled_orders):
         qty+=filled_orders[count]["quantity"]
-        amt+=filled_orders[count]["price"]*filled_orders[count]["quantity"]
+        amt+=filled_orders[count]["amount"]+filled_orders[count]["commission"]
         if qty<0 and unit_cost<abs(amt/qty):
             unit_cost=abs(amt/qty)
             best_qty=qty

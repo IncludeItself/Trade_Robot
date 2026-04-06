@@ -29,7 +29,7 @@ def get_sina_stock(stock_code):
 
         if response.status_code == 200:
             data_str = response.text.split('"')[1]
-            logger.info(f"获取到的原始数据：{data_str}")
+            # logger.info(f"获取到的原始数据：{data_str}")
             data_list = data_str.split(',')
             # print(f"原始数据：\n"
             #       f"0.名称：{data_list[0]}\n"
@@ -70,5 +70,5 @@ def get_sina_stock(stock_code):
             return f"请求失败，状态码：{response.status_code}"
 
     except Exception as e:
-        logger.info(f"查询异常：{str(e)}")
+        # logger.info(f"查询异常：{str(e)}")
         return f"查询异常：{str(e)}"
