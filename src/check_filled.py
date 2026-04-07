@@ -9,6 +9,7 @@ from data.sqllite import get_bar_data, delete_tbl_pending_orders, insert_filled_
 from exception.exception_handler import exception_handler
 from src import state
 from src.locks import orders_lock
+from src.public_ip import get_public_ip
 from wecom.wecom import send_wecom_msg
 
 
@@ -142,6 +143,7 @@ def check_filled():
                                                                 )
                 except Exception as e:
                     exception_handler(e,f"币安查询成交记录时错误,时间：{start_timestamp}到{end_timestamp}")
+                    send_wecom_msg(get_public_ip())
                     continue
                 if filled_rows and len(filled_rows)>0:
                     send_wecom_msg(f"成交{len(filled_rows)}条记录：{filled_rows}")

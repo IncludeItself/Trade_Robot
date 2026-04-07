@@ -5,7 +5,12 @@ import time
 from api.api import get_symbol_bar_data
 from api.bnapi import BnApi
 from data.sqllite import insert_bar_data, get_last_bar_data
+from exception.exception_handler import exception_handler
 from src import state
+from src.public_ip import get_public_ip
+from wecom.wecom import send_wecom_msg
+
+
 # from api.api import get_symbol_bar_data
 
 
@@ -51,7 +56,12 @@ def get_bar_data():
                 now_timestamp = datetime.datetime.now().timestamp()
                 if last_bar_data is not None and now_timestamp-last_bar_data["timestamp"]<5*60+5:
                     continue
-                new_bar_data=get_symbol_bar_data(exchange,symbol["symbol"])
+                try:
+                    new_bar_data=get_symbol_bar_data(exchange,symbol["symbol"])
+                except Exception as e:
+                    exception_handler(e,f"币安获取{symbol['symbol']}的K线数据时错误：{e}")
+                    send_wecom_msg(get_public_ip())
+                    continue
                 if new_bar_data is None or (last_bar_data is not None and new_bar_data["timestamp"]==last_bar_data["timestamp"]):
                     continue
                 else:

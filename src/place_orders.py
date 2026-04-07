@@ -5,6 +5,7 @@ import time
 from api.bnapi import BnApi
 from data.sqllite import get_bar_data, insert_pending_order, get_pending_orders_symbol
 from exception.exception_handler import exception_handler
+from src.public_ip import get_public_ip
 from src.trade_advisor import price_advice_a
 from src import state
 from src.grid_limit import grid_allow
@@ -107,6 +108,7 @@ def buy_order_exist(symbol):
             logger.info(f"{symbol['symbol']} 是否存在买入订单: {result}")
         except Exception as e:
             exception_handler(e,f"币安获取{symbol['symbol']}的买入挂单时错误：{e}")
+            send_wecom_msg(get_public_ip())
     return result
 
 
