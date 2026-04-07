@@ -50,7 +50,7 @@ def place_order(symbol, qty, price, direction):
         place_order_ths(symbol, qty, price, direction)
     elif symbol_info["platform"]=="bn":
         bn=BnApi()
-
+        positionSide='LONG' if direction=="Buy" else 'SHORT'
         try:
             bn.client.futures_create_order(
                 symbol=symbol,
@@ -59,7 +59,7 @@ def place_order(symbol, qty, price, direction):
                 quantity=str(abs(round(qty,3))),
                 price=str(round(price,int(symbol_info["decimal"]))),
                 timeInForce='GTC',
-                positionSide='LONG'
+                positionSide=positionSide
             )
         except Exception as e:
             exception_handler(e,f"币安挂单时错误,价格：{str(round(price,int(symbol_info["decimal"])))}，数量：{str(abs(round(qty,3)))}")
@@ -69,20 +69,44 @@ def place_order(symbol, qty, price, direction):
 def sell_order_exist(symbol):
     test_logger = logging.getLogger("test_logger")
     logger=logging.getLogger("sell_order_exist")
-    symbol_pending=state.t_pending_orders[symbol]
-    test_logger.info(f"目前存在的挂单：{symbol_pending}")
-    result=any(order["symbol"]==symbol and order["direction"]=="Sell" for order in symbol_pending)
-    test_logger.info(f"{symbol} 是否存在卖出订单: {result}")
-    logger.info(f"{symbol} 是否存在卖出订单: {result}")
+    result=True
+    if symbol["platform"]=="ths":
+        symbol_pending=state.t_pending_orders[symbol["symbol"]]
+        test_logger.info(f"目前存在的挂单：{symbol_pending}")
+        result=any(order["symbol"]==symbol["symbol"] and order["direction"]=="Sell" for order in symbol_pending)
+        test_logger.info(f"{symbol['symbol']} 是否存在卖出订单: {result}")
+        logger.info(f"{symbol['symbol']} 是否存在卖出订单: {result}")
+    elif symbol["platform"]=="bn":
+        bn=BnApi()
+        try:
+            symbol_pending=bn.client.futures_get_open_orders(symbol=symbol["symbol"])
+            result=any(order["side"]=="SELL" for order in symbol_pending)
+            test_logger.info(f"{symbol['symbol']} 是否存在卖出订单: {result}")
+            logger.info(f"{symbol['symbol']} 是否存在卖出订单: {result}")
+        except Exception as e:
+            exception_handler(e,f"币安获取{symbol['symbol']}的卖出挂单时错误：{e}")
     return result
 
 
 def buy_order_exist(symbol):
     test_logger = logging.getLogger("test_logger")
-    symbol_pending=state.t_pending_orders[symbol]
-    test_logger.info(f"目前存在的挂单：{symbol_pending}")
-    result=any(order["symbol"]==symbol and order["direction"]=="Buy" for order in symbol_pending)
-    test_logger.info(f"{symbol} 是否存在买入订单: {result}")
+    logger=logging.getLogger("buy_order_exist")
+    result=True
+    if symbol["platform"]=="ths":
+        symbol_pending=state.t_pending_orders[symbol["symbol"]]
+        test_logger.info(f"目前存在的挂单：{symbol_pending}")
+        result=any(order["symbol"]==symbol["symbol"] and order["direction"]=="Buy" for order in symbol_pending)
+        test_logger.info(f"{symbol['symbol']} 是否存在买入订单: {result}")
+        logger.info(f"{symbol['symbol']} 是否存在买入订单: {result}")
+    elif symbol["platform"]=="bn":
+        bn=BnApi()
+        try:
+            symbol_pending=bn.client.futures_get_open_orders(symbol=symbol["symbol"])
+            result=any(order["side"]=="BUY" for order in symbol_pending)
+            test_logger.info(f"{symbol['symbol']} 是否存在买入订单: {result}")
+            logger.info(f"{symbol['symbol']} 是否存在买入订单: {result}")
+        except Exception as e:
+            exception_handler(e,f"币安获取{symbol['symbol']}的买入挂单时错误：{e}")
     return result
 
 
@@ -129,7 +153,7 @@ def place_orders():
             if signal=="Wait":
                 continue
             with orders_lock:
-                if not sell_order_exist(symbol["symbol"]) and signal=="Sell":
+                if not sell_order_exist(symbol) and signal=="Sell":
                     qty_stack,stack_price,pos_qty=stack_support_sell(symbol,price)
                     qty_grid=grid_allow("Sell",symbol["symbol"],price,pos_qty)
                     if stack_price>round(bar_data[-1]["pre_close"]*(1+symbol["upper_limit"]),2):
@@ -139,7 +163,7 @@ def place_orders():
                     # 执行卖出操作
                     place_order(symbol["symbol"], min(qty_stack,qty_grid),max(price,stack_price), "Sell")
 
-                if not buy_order_exist(symbol["symbol"]) and signal=="Buy":
+                if not buy_order_exist(symbol) and signal=="Buy":
                     qty_stack,stack_price,pos_qty=stack_support_buy(symbol,price)
                     qty_grid=grid_allow("Buy",symbol["symbol"],price,pos_qty)
                     # 执行买入操作

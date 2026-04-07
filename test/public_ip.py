@@ -33,6 +33,8 @@ def get_public_ip(proxy=False):
         except:
             continue
 
+    result={"ip": ip}
+
     url = f"http://ip-api.com/json/{ip}?lang=zh-CN"
 
     try:
@@ -42,17 +44,17 @@ def get_public_ip(proxy=False):
             res = requests.get(url, timeout=8)
         data = res.json()
         if data.get("status") == "success":
-            return {
-                "ip": ip,
-                "国家": data.get("country"),
-                "省份": data.get("regionName"),
-                "城市": data.get("city"),
-                "运营商": data.get("isp"),
-                "经纬度": (data.get("lat"), data.get("lon"))
-            }
-        return {"错误": data.get("message", "查询失败")}
+            result["国家"]= data.get("country")
+            result["省份"]= data.get("regionName")
+            result["城市"]= data.get("city")
+            result["运营商"]= data.get("isp")
+            result["经纬度"]= (data.get("lat"), data.get("lon"))
+        else:
+            result["错误"]=data.get("message", "查询失败")
+        return result
     except Exception as e:
-        return {"错误": str(e)}
+        result["错误"]=str(e)
+        return result
 
     return "所有接口都失败了"
 

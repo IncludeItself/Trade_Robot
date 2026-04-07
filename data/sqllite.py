@@ -139,7 +139,7 @@ def refresh_tbl_bar_data():
     """刷新K线数据表，删除所有数据"""
     conn = get_db_connection()
     cursor = conn.cursor()
-    timestamp = get_previous_time_timestamp(appConfig["start_time"])
+    timestamp = get_previous_time_timestamp(appConfig["start_time"])-60*60
     cursor.execute("DELETE FROM tbl_bar_data WHERE timestamp < ?", (timestamp,))
     conn.commit()
     print("✅ 盘口数据表已刷新，删除所有数据")

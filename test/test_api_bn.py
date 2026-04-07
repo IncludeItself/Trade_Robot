@@ -26,12 +26,15 @@ bn = BnApi()
 
 
 
-print(f"str(datetime.now().timestamp()*1000):{int(datetime.now().timestamp()*1000)}")
-trades=bn.client.futures_account_trades(
-                symbol='BTCUSDT',
-                limit="1000",
-                startTime="1774972800000",
-                endTime=str(int(datetime.now().timestamp()*1000)),
-                fromId=None
-            )
-print(trades)
+# print(f"str(datetime.now().timestamp()*1000):{int(datetime.now().timestamp()*1000)}")
+# trades=bn.client.futures_account_trades(
+#                 symbol='BTCUSDT',
+#                 limit="1000",
+#                 startTime="1774972800000",
+#                 endTime=str(int(datetime.now().timestamp()*1000)),
+#                 fromId=None
+#             )
+# print(trades)
+
+pending_orders=bn.client.futures_get_open_orders(symbol="BTCUSDT")
+print(pending_orders)

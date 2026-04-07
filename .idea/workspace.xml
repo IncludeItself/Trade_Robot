@@ -1,34 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5c78b3f1-4a64-4926-9bef-9b00b1e64729" name="Changes" comment="20260403">
-      <change afterPath="$PROJECT_DIR$/api/bnapi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exception/exception_handler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/trade_advisor_bn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/public_ip.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/test_api_bn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/test_bn_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/MarsCodeWorkspaceAppSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MarsCodeWorkspaceAppSettings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="5c78b3f1-4a64-4926-9bef-9b00b1e64729" name="Changes" comment="202604072">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/get_sina_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/get_sina_stock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/.env" beforeDir="false" afterPath="$PROJECT_DIR$/config/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/app.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/env_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/env_config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/sqllite.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/sqllite.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/tr_data.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/data/tr_data.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/trade_robot.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/trade_robot.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/database.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/database.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/check_filled.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/check_filled.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_bar_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_bar_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/place_orders.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/place_orders.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stack_limit.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/stack_limit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/start_end.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/start_end.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/trade_advisor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trade_advisor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/public_ip.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/public_ip.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_api_bn.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_api_bn.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +91,7 @@
       <command value="pip freeze &gt; requirements.txt" />
     </option>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.wecom">
     <configuration name="get_bar_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Trade_Robot" />
       <option name="ENV_FILES" value="" />
@@ -211,7 +192,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test_sina_api" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="wecom" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Trade_Robot" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -220,14 +201,14 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/wecom" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="false" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/test_sina_api.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wecom/wecom.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -238,11 +219,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.wecom" />
         <item itemvalue="Python.public_ip" />
-        <item itemvalue="Python.test_api_bn" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.test_api_bn" />
         <item itemvalue="Python.get_bar_data" />
-        <item itemvalue="Python.test_sina_api" />
       </list>
     </recent_temporary>
   </component>
@@ -275,7 +256,7 @@
       <workItem from="1775404993690" duration="675000" />
       <workItem from="1775448415405" duration="3640000" />
       <workItem from="1775465627124" duration="2856000" />
-      <workItem from="1775468793537" duration="19891000" />
+      <workItem from="1775468793537" duration="34736000" />
     </task>
     <task id="LOCAL-00001" summary="20260323">
       <option name="closed" value="true" />
@@ -341,7 +322,23 @@
       <option name="project" value="LOCAL" />
       <updated>1775173389029</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="20260407">
+      <option name="closed" value="true" />
+      <created>1775518520015</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1775518520015</updated>
+    </task>
+    <task id="LOCAL-00010" summary="202604072">
+      <option name="closed" value="true" />
+      <created>1775519072598</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1775519072598</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -356,19 +353,21 @@
     <MESSAGE value="20260401" />
     <MESSAGE value="20260402" />
     <MESSAGE value="20260403" />
-    <option name="LAST_COMMIT_MESSAGE" value="20260403" />
+    <MESSAGE value="20260407" />
+    <MESSAGE value="202604072" />
+    <option name="LAST_COMMIT_MESSAGE" value="202604072" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Trade_Robot$public_ip.coverage" NAME="public_ip Coverage Results" MODIFIED="1775518137572" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/Trade_Robot$public_ip.coverage" NAME="public_ip Coverage Results" MODIFIED="1775599882903" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/Trade_Robot$test_akshare_api.coverage" NAME="test_akshare_api Coverage Results" MODIFIED="1774827579180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/Trade_Robot$get_history_data.coverage" NAME="get_history_data Coverage Results" MODIFIED="1774773575693" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mock" />
     <SUITE FILE_PATH="coverage/Trade_Robot$test_bn_api.coverage" NAME="test_bn_api Coverage Results" MODIFIED="1775300655773" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/Trade_Robot$test_baostock_api.coverage" NAME="test_baostock_api Coverage Results" MODIFIED="1773544058836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/Trade_Robot$test_sina_api.coverage" NAME="test_sina_api Coverage Results" MODIFIED="1775306735559" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/Trade_Robot$main.coverage" NAME="main Coverage Results" MODIFIED="1775516910932" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Trade_Robot$test_api_bn.coverage" NAME="test_api_bn Coverage Results" MODIFIED="1775516979106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/Trade_Robot$test_api_bn.coverage" NAME="test_api_bn Coverage Results" MODIFIED="1775567297799" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/Trade_Robot$main.coverage" NAME="main Coverage Results" MODIFIED="1775571938781" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Trade_Robot$test_yh_api.coverage" NAME="test_yh_api Coverage Results" MODIFIED="1773544483093" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/Trade_Robot$wecom.coverage" NAME="wecom Coverage Results" MODIFIED="1775276372902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wecom" />
+    <SUITE FILE_PATH="coverage/Trade_Robot$wecom.coverage" NAME="wecom Coverage Results" MODIFIED="1775599743250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wecom" />
     <SUITE FILE_PATH="coverage/Trade_Robot$get_bar_data.coverage" NAME="get_bar_data Coverage Results" MODIFIED="1775309109844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

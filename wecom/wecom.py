@@ -8,9 +8,9 @@ WEBHOOK_URL = f"https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={WEBHOOK_KE
 def send_wecom_msg(content):
 
     data = {"msgtype": "text", "text": {"content": content}}
-    resp = requests.post(WEBHOOK_URL, json=data)
+    resp = requests.post(WEBHOOK_URL,proxies="", json=data)
     # print(resp.json())
 
 # 测试
-# send_wecom_msg("测试：企业微信消息推送（原群机器人）")
+send_wecom_msg("测试：企业微信消息推送（原群机器人）")
 
