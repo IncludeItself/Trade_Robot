@@ -146,7 +146,10 @@ def check_filled():
                     send_wecom_msg(get_public_ip())
                     continue
                 if filled_rows and len(filled_rows)>0:
-                    send_wecom_msg(f"成交{len(filled_rows)}条记录：{filled_rows}")
+                    msg_str=""
+                    for filled_row in filled_rows:
+                        msg_str+=f"{filled_row['side']} {filled_row['symbol']} {filled_row['qty']} {filled_row['price']}/{filled_row['commission']}\n"
+                    send_wecom_msg(msg_str)
                 for filled_row in filled_rows:
                     with orders_lock:
                         symbol_filled = state.t_filled_orders.get(filled_row["symbol"], [])

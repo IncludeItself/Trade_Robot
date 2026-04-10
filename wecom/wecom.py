@@ -12,5 +12,5 @@ def send_wecom_msg(content):
     # print(resp.json())
 
 # 测试
-send_wecom_msg("测试：企业微信消息推送（原群机器人）")
+# send_wecom_msg("测试：企业微信消息推送（原群机器人）")
 
