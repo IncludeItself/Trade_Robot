@@ -59,5 +59,9 @@ def get_grid(t_symbols):
         # 这可以避免因为 Excel 单元格格式（数字 vs 文本）不同导致的匹配失败
         # 同时，统一使用字符串作为 result 的键，增加后续处理的稳定性
         key = str(symbol["symbol"])
-        result[key] = [row for row in data if str(row["symbol"]) == key]
+        result_symbol=[row for row in data if str(row["symbol"]) == key]
+        result_symbol.sort(key=lambda row: row["qty"],reverse=True)
+        result[key] = result_symbol
     return result
+
+

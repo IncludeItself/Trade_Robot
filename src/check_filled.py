@@ -3,6 +3,7 @@ import threading
 from datetime import datetime
 import time
 
+from api.api import place_order_api
 from api.bnapi import BnApi
 from data.sqllite import get_bar_data, delete_tbl_pending_orders, insert_filled_order, get_filled_orders_symbol, \
     get_pending_orders_symbol, update_tbl_filled_orders_symbol
@@ -88,6 +89,22 @@ def update_tbl_pending_orders(pending_order):
     pass
 
 
+def place_reverse_order(symbol_info, filled_row):
+    qty=filled_row["quantity"]
+    pos=state.t_filled_orders[symbol_info["symbol"]][0]["pos_qty"]
+    price=float(filled_row["price"])
+    if qty>0:
+        price = float(filled_row["price"]) * (1 + symbol_info["step_rate"])
+    else:
+        price = float(filled_row["price"]) * (1 - symbol_info["step_rate"])
+    place_order_api({
+        "symbol":filled_row["symbol"],
+        "qty":-qty,
+        "price":round(price, int(symbol_info["decimal"])),
+    },"bn")
+
+
+
 def check_filled():
     """你的核心业务逻辑（持续运行的任务）"""
     test_logger = logging.getLogger("test_logger")
@@ -161,7 +178,7 @@ def check_filled():
                         timestamp=int(filled_row["time"]) / 1000
                         if timestamp>state.t_filled_timestamp.get(symbol_info["symbol"], 0):
                             state.t_filled_timestamp[symbol_info["symbol"]]=timestamp
-                        update_tbl_filled_orders({
+                        filled_item={
                             "symbol": filled_row["symbol"],
                             "quantity": quantity,
                             "price": float(filled_row["price"]),
@@ -171,8 +188,10 @@ def check_filled():
                             "cleared": 0,
                             "amount": -float(filled_row["quoteQty"]) if filled_row["side"]=="BUY" else float(filled_row["quoteQty"]),
                             "commission": -float(filled_row["commission"]),
-                        })
-                clear_orders(symbol_info["symbol"])
+                        }
+                        update_tbl_filled_orders(filled_item)
+                        place_reverse_order(symbol_info,filled_item)
+            clear_orders(symbol_info["symbol"])
 
         time.sleep(6)  # 模拟业务执行间隔，根据你的需求调整
 

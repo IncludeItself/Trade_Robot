@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5c78b3f1-4a64-4926-9bef-9b00b1e64729" name="Changes" comment="202604082">
+    <list default="true" id="5c78b3f1-4a64-4926-9bef-9b00b1e64729" name="Changes" comment="20260411">
+      <change afterPath="$PROJECT_DIR$/src/place_orders_bn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/bnapi.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/bnapi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/excel_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/excel_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/tr_data.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/data/tr_data.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/trade_robot.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/trade_robot.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/check_filled.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/check_filled.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/place_orders.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/place_orders.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_api_bn.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_api_bn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wecom/wecom.py" beforeDir="false" afterPath="$PROJECT_DIR$/wecom/wecom.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,37 +50,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.get_bar_data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.get_history_data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.public_ip.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_akshare_api.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_api_bn.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_baostock_api.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_bn_api.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_sina_api.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_yh_api.executor&quot;: &quot;Run&quot;,
-    &quot;Python.wecom.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/workplace/Trade_Robot&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.excel_data.executor": "Run",
+    "Python.get_bar_data.executor": "Run",
+    "Python.get_history_data.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.public_ip.executor": "Run",
+    "Python.test_akshare_api.executor": "Run",
+    "Python.test_api_bn.executor": "Run",
+    "Python.test_baostock_api.executor": "Run",
+    "Python.test_bn_api.executor": "Run",
+    "Python.test_sina_api.executor": "Run",
+    "Python.test_yh_api.executor": "Run",
+    "Python.wecom.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "E:/workplace/Trade_Robot",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\workplace\Trade_Robot\mock" />
@@ -88,7 +97,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.main">
-    <configuration name="get_bar_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="excel_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Trade_Robot" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -97,14 +106,14 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="false" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/get_bar_data.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/excel_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -216,10 +225,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.public_ip" />
-        <item itemvalue="Python.wecom" />
         <item itemvalue="Python.test_api_bn" />
-        <item itemvalue="Python.get_bar_data" />
+        <item itemvalue="Python.public_ip" />
+        <item itemvalue="Python.excel_data" />
+        <item itemvalue="Python.wecom" />
       </list>
     </recent_temporary>
   </component>
@@ -252,7 +261,7 @@
       <workItem from="1775404993690" duration="675000" />
       <workItem from="1775448415405" duration="3640000" />
       <workItem from="1775465627124" duration="2856000" />
-      <workItem from="1775468793537" duration="49588000" />
+      <workItem from="1775468793537" duration="97254000" />
     </task>
     <task id="LOCAL-00001" summary="20260323">
       <option name="closed" value="true" />
@@ -350,7 +359,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775600595851</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="20260411">
+      <option name="closed" value="true" />
+      <created>1775862897306</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1775862897306</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -369,19 +386,21 @@
     <MESSAGE value="202604072" />
     <MESSAGE value="20260408" />
     <MESSAGE value="202604082" />
-    <option name="LAST_COMMIT_MESSAGE" value="202604082" />
+    <MESSAGE value="20260411" />
+    <option name="LAST_COMMIT_MESSAGE" value="20260411" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Trade_Robot$public_ip.coverage" NAME="public_ip Coverage Results" MODIFIED="1775763987293" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/Trade_Robot$test_akshare_api.coverage" NAME="test_akshare_api Coverage Results" MODIFIED="1774827579180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/Trade_Robot$get_history_data.coverage" NAME="get_history_data Coverage Results" MODIFIED="1774773575693" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mock" />
     <SUITE FILE_PATH="coverage/Trade_Robot$test_bn_api.coverage" NAME="test_bn_api Coverage Results" MODIFIED="1775300655773" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/Trade_Robot$test_baostock_api.coverage" NAME="test_baostock_api Coverage Results" MODIFIED="1773544058836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/Trade_Robot$test_sina_api.coverage" NAME="test_sina_api Coverage Results" MODIFIED="1775306735559" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/Trade_Robot$test_api_bn.coverage" NAME="test_api_bn Coverage Results" MODIFIED="1775567297799" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/Trade_Robot$main.coverage" NAME="main Coverage Results" MODIFIED="1775769701208" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Trade_Robot$test_baostock_api.coverage" NAME="test_baostock_api Coverage Results" MODIFIED="1773544058836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/Trade_Robot$test_yh_api.coverage" NAME="test_yh_api Coverage Results" MODIFIED="1773544483093" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/Trade_Robot$wecom.coverage" NAME="wecom Coverage Results" MODIFIED="1775600219758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/wecom" />
     <SUITE FILE_PATH="coverage/Trade_Robot$get_bar_data.coverage" NAME="get_bar_data Coverage Results" MODIFIED="1775309109844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/Trade_Robot$public_ip.coverage" NAME="public_ip Coverage Results" MODIFIED="1776336438154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/Trade_Robot$get_history_data.coverage" NAME="get_history_data Coverage Results" MODIFIED="1774773575693" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mock" />
+    <SUITE FILE_PATH="coverage/Trade_Robot$excel_data.coverage" NAME="excel_data Coverage Results" MODIFIED="1776207449107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/Trade_Robot$test_api_bn.coverage" NAME="test_api_bn Coverage Results" MODIFIED="1776342894482" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/Trade_Robot$main.coverage" NAME="main Coverage Results" MODIFIED="1776345274396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

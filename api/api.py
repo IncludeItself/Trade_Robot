@@ -7,6 +7,7 @@ from config.env_config import config
 from logs import logger
 from mock.excel import excel_to_dict_list
 from api.get_sina_stock import get_sina_stock
+from wecom.wecom import send_wecom_msg
 
 access_time = 0
 
@@ -77,7 +78,7 @@ def get_symbol_bar_data(exchange,stock_code):
     elif exchange.lower() == "bn":
         try:
             bn = BnApi()
-            line = bn.client.futures_klines(symbol=stock_code, interval='5m', limit=1)
+            line = bn.client.futures_klines(symbol=stock_code, interval='1m', limit=1)
             # logger.info(f"get bar data bn: {line}")
             if line and len(line) > 0:
                 timestamp = line[0][0] / 1000
@@ -133,3 +134,69 @@ def get_bar_history(exchange,prefix,symbol):
             "value": float(data_list[9])
         }
     return None
+
+def place_order_api(pending_order:dict, platform:str):
+    if platform.lower() == "bn":
+        side = "BUY" if pending_order["qty"] > 0 else "SELL"
+        qty_str = str(pending_order["qty"])
+        position_side = "LONG"
+        bn = BnApi()
+        try:
+            bn.client.futures_create_order(
+                symbol=pending_order["symbol"],
+                type="LIMIT",
+                side=side,
+                quantity=qty_str,
+                price=str(pending_order["price"]),
+                timeInForce='GTC',
+                positionSide=position_side
+            )
+        except Exception as e:
+            position_side="SHORT"
+            try:
+                bn.client.futures_create_order(
+                    symbol=pending_order["symbol"],
+                    type="LIMIT",
+                    side=side,
+                    quantity=qty_str,
+                    price=str(pending_order["price"]),
+                    timeInForce='GTC',
+                    positionSide=position_side
+                )
+            except Exception as e:
+                logger.error(f"place order bn error: {e}")
+                send_wecom_msg(f"place order bn error: {e}")
+
+def get_positions(symbol:str, platform:str):
+    logger=logging.getLogger("api->get_positions")
+    if platform.lower() == "bn":
+        bn = BnApi()
+        try:
+            positions = bn.client.futures_position_information(symbol=symbol)
+            logger.info(f"get positions bn: {positions}")
+            if not positions:
+                return 0
+            return sum(float(order["positionAmt"]) for order in positions),max(float(order["updateTime"]) for order in positions)/1000
+        except Exception as e:
+            logger.error(f"get positions bn error: {e}")
+            send_wecom_msg(f"get positions bn error: {e}")
+            return 0,datetime.now().timestamp()
+    return None
+
+
+def get_current_price(symbol:str, platform:str):
+    logger=logging.getLogger("api->get_current_price")
+    if platform.lower() == "bn":
+        bn = BnApi()
+        try:
+            price = float(bn.client.futures_symbol_ticker(symbol=symbol)["price"])
+            logger.info(f"get current price bn: {price}")
+            return price
+        except Exception as e:
+            logger.error(f"get current price bn error: {e}")
+            send_wecom_msg(f"get current price bn error: {e}")
+            return None
+    else:
+        return 0
+
+

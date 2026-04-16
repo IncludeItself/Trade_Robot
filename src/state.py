@@ -1,6 +1,8 @@
 # 全局状态变量，用于标记核心任务是否正在运行
+import logging
 from datetime import datetime
 
+from api.api import get_positions
 from config.app_config import appConfig
 from data.sqllite import get_last_day_bar
 
@@ -25,6 +27,8 @@ t_period= {}
 
 # 成交记录的最大时间戳
 t_filled_timestamp={}
+# 持仓记录
+t_positions={}
 
 
 def get_last_bar_history(symbol:str):
@@ -51,3 +55,49 @@ def get_period(exchange:str):
         period = int(abs(end_sec_morning - start_sec_morning + end_sec_afternoon - start_sec_afternoon))  # 绝对值，避免顺序问题
         t_period[exchange] = period
     return t_period[exchange]
+
+def get_grid_up(symbol:str,price):
+    logger=logging.getLogger("state->get_grid_up")
+    grid=t_grid.get(symbol,None)
+    if grid is None:
+        logger.error(f"grid not found for symbol {symbol}")
+        pass
+    for item in reversed(grid):
+        if item["price"] > price:
+            return item
+    logger.error(f"no grid item found price > {price} for symbol {symbol}")
+    return None
+def get_grid_down(symbol:str,price):
+    logger=logging.getLogger("state->get_grid_down")
+    grid=t_grid.get(symbol,None)
+    if grid is None:
+        logger.error(f"grid not found for symbol {symbol}")
+        pass
+    for item in grid:
+        if item["price"] < price:
+            return item
+    logger.error(f"no grid item found price < {price} for symbol {symbol}")
+    return None
+
+def get_symbol_info(symbol:str):
+    logger=logging.getLogger("state->get_symbol_info")
+    for symbol_info in t_symbols:
+        if symbol_info["symbol"] == symbol:
+            return symbol_info
+    logger.error(f"symbol not found for symbol {symbol}")
+    return None
+
+def get_position(symbol=""):
+    pos_qty=t_positions.get(symbol,None)
+    if pos_qty is None:
+        symbol_info=get_symbol_info(symbol)
+        if symbol_info is None:
+            return 0
+        if symbol_info["platform"].lower() == "bn":
+            pos_qty,update_timestamp=get_positions(symbol_info["symbol"],"bn")
+            t_positions[symbol]={"pos_qty":pos_qty,"timestamp":update_timestamp}
+            return t_positions[symbol]
+        return None
+    else:
+        return pos_qty
+

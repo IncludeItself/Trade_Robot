@@ -1,23 +1,34 @@
 from binance.client import Client
-
 from binance.exceptions import BinanceAPIException, BinanceRequestException
-
 from config.env_config import config
+import time
+from wecom.wecom import send_wecom_msg
 
 
 class BnApi:
     _instance = None
-
+    _initialized = False  # 新增：标记是否真正初始化完成
 
     def __new__(cls):
+        # 1. 单例：确保只创建一次实例
         if cls._instance is None:
-            cls._instance = super(BnApi, cls).__new__(cls)
+            cls._instance = super().__new__(cls)
+
+        # 2. 只执行一次初始化逻辑
+        if not cls._initialized:
             cls._instance._init_client()
+            cls._initialized = cls._instance._test_connection()
+
+            # 如果初始化失败，重置状态，保证外部调用一定拿到有效实例
+            if not cls._initialized:
+                cls._instance = None
+                raise Exception("❌ 币安API初始化失败：5秒内无法连接")
+
         return cls._instance
 
     def _init_client(self):
-
-        proxies={
+        """初始化客户端"""
+        proxies = {
             "http": config.proxy_http,
             "https": config.proxy_https,
         }
@@ -29,17 +40,33 @@ class BnApi:
             requests_params={"proxies": proxies}
         )
 
+    def _test_connection(self) -> bool:
+        """测试连接，5秒超时，返回是否成功"""
+        start_time = time.time()
+        while time.time() - start_time < 5:
+            try:
+                self.client.futures_symbol_ticker(symbol="BTCUSDT")
+                print("✅ 币安API连接成功")
+                return True
+            except Exception as e:
+                print(f"⏳ 测试连接中... {str(e)}")
+                time.sleep(0.5)
+
+        print("❌ 连接超时：5秒内无法连接币安API")
+        return False
+
+    # ------------------------------
+    # 下面是你原本的接口方法（无修改）
+    # ------------------------------
     def get_user_trades(
             self,
             symbol: str,
-            limit: str = "500",  # 最多返回500条，币安接口限制
-            start_time: int = None,  # 起始时间戳（毫秒）
-            end_time: int = None,  # 结束时间戳（毫秒）
-            from_id: int = None  # 从指定成交ID开始返回
-
+            limit: str = "500",
+            start_time: int = None,
+            end_time: int = None,
+            from_id: int = None
     ) -> list:
         try:
-            # 调用/fapi/v1/userTrades接口（底层映射）
             trades = self.client.futures_account_trades(
                 symbol=symbol,
                 limit=limit,
@@ -49,10 +76,8 @@ class BnApi:
             )
             return trades
         except BinanceAPIException as e:
-            # 针对性错误提示（辅助排查）
             error_msg = f"❌ API错误 - 代码：{e.code}，信息：{e.message}"
             print(error_msg)
-            # 常见错误码解读
             if e.code == -2015:
                 print("   → 原因：API Key/Secret错误、IP白名单未配置、期货权限未开启")
             elif e.code == -1022:
@@ -63,30 +88,26 @@ class BnApi:
                 print("   → 原因：API Key未开启期货交易权限")
             return []
         except BinanceRequestException as e:
-            # 网络/请求层面错误（如超时、连接失败）
             print(f"请求错误：{str(e)}")
             return []
         except Exception as e:
-            # 其他未知错误
             print(f"未知错误：{str(e)}")
             return []
 
     def futures_cancel_all_open_orders(self, param) -> bool:
         self.client.futures_cancel_all_open_orders(symbol=param["symbol"])
+        return True
 
     def futures_get_open_orders(self, param) -> list:
         return self.client.futures_get_open_orders(**param)
 
     def futures_symbol_ticker(self, symbol) -> dict:
-
         return self.client.futures_symbol_ticker(symbol=symbol)
 
     def futures_position_information(self, symbol) -> dict:
-
         return self.client.futures_position_information(symbol=symbol)
 
     def futures_create_order(self, symbol, type, side, quantity, timeInForce, price, positionSide) -> dict:
-
         return self.client.futures_create_order(
             symbol=symbol,
             type=type,
