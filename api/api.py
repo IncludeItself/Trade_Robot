@@ -136,9 +136,10 @@ def get_bar_history(exchange,prefix,symbol):
     return None
 
 def place_order_api(pending_order:dict, platform:str):
+    logger=logging.getLogger("api->place_order_api")
     if platform.lower() == "bn":
         side = "BUY" if pending_order["qty"] > 0 else "SELL"
-        qty_str = str(pending_order["qty"])
+        qty_str = str(abs(pending_order["qty"]))
         position_side = "LONG"
         bn = BnApi()
         try:
