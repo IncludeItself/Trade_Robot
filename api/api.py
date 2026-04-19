@@ -1,6 +1,11 @@
 import logging
 
 from datetime import datetime
+from functools import wraps
+import time
+
+import requests
+from binance import BinanceRequestException, BinanceAPIException
 
 from api.bnapi import BnApi
 from config.env_config import config
@@ -11,6 +16,45 @@ from wecom.wecom import send_wecom_msg
 
 access_time = 0
 
+def retry_api(max_retries=5, delay=0.5):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            last_exception = None
+            for attempt in range(1, max_retries + 1):
+                try:
+                    return func(*args, **kwargs)
+                except (BinanceRequestException, ConnectionError,
+                    requests.exceptions.ConnectionError,  # 新增
+                    ConnectionResetError,                 # 新增
+                    ConnectionAbortedError,                # 新增
+                    ConnectionRefusedError,                # 新增
+                    requests.exceptions.ReadTimeout,        # 新增
+                    requests.exceptions.ConnectTimeout,    # 新增
+                    requests.exceptions.SSLError,         # 新增
+                    requests.exceptions.ChunkedEncodingError,  # 新增
+                    TimeoutError) as e:
+                    # 只重试【网络类错误】
+                    last_exception = e
+                    print(f"⚠️  网络波动，第 {attempt} 次重试，等待 {delay}s...")
+                    time.sleep(delay)
+                except BinanceAPIException as e:
+                    # 币安服务器错误（5xx）也重试，业务错误（4xx）不重试
+                    last_exception = e
+                    if 500 <= e.code <= 599 or e.code in [-1003, -1006, -1007]:
+                        print(f"⚠️  服务端错误，第 {attempt} 次重试，等待 {delay}s...")
+                        time.sleep(delay)
+                    else:
+                        pass
+                        # 业务错误（key错、参数错）直接失败，不重试
+                        # raise
+            # 全部重试失败 → 抛出最终异常
+            send_wecom_msg(f"❌ 连续 {max_retries} 次接口调用失败")
+            # raise Exception(f"❌ 连续 {max_retries} 次接口调用失败") from last_exception
+        return wrapper
+    return decorator
+
+@retry_api(max_retries=5, delay=0.5)
 def get_symbol_bar_data(exchange,stock_code):
     logger = logging.getLogger(__name__)
     test_logger = logging.getLogger("test_logger")
@@ -107,7 +151,7 @@ def get_symbol_bar_data(exchange,stock_code):
             return None
     return None
 
-
+# @retry_api(max_retries=5, delay=0.5)
 def get_bar_history(exchange,prefix,symbol):
     if exchange.lower() == "a":
         data_list = get_sina_stock(prefix+symbol)
@@ -135,6 +179,8 @@ def get_bar_history(exchange,prefix,symbol):
         }
     return None
 
+
+@retry_api(max_retries=5, delay=0.5)
 def place_order_api(pending_order:dict, platform:str):
     logger=logging.getLogger("api->place_order_api")
     if platform.lower() == "bn":
@@ -168,36 +214,57 @@ def place_order_api(pending_order:dict, platform:str):
                 logger.error(f"place order bn error: {e}")
                 send_wecom_msg(f"place order bn error: {e}")
 
+@retry_api(max_retries=5, delay=0.5)
 def get_positions(symbol:str, platform:str):
     logger=logging.getLogger("api->get_positions")
     if platform.lower() == "bn":
         bn = BnApi()
-        try:
-            positions = bn.client.futures_position_information(symbol=symbol)
-            logger.info(f"get positions bn: {positions}")
-            if not positions:
-                return 0
-            return sum(float(order["positionAmt"]) for order in positions),max(float(order["updateTime"]) for order in positions)/1000
-        except Exception as e:
-            logger.error(f"get positions bn error: {e}")
-            send_wecom_msg(f"get positions bn error: {e}")
-            return 0,datetime.now().timestamp()
+
+        positions = bn.client.futures_position_information(symbol=symbol)
+        logger.info(f"get positions bn: {positions}")
+        if not positions:
+            return 0
+        return sum(float(order["positionAmt"]) for order in positions),max(float(order["updateTime"]) for order in positions)/1000
+
     return None
 
 
-def get_current_price(symbol:str, platform:str):
-    logger=logging.getLogger("api->get_current_price")
+@retry_api(max_retries=5, delay=0.5)
+def get_current_price(symbol: str, platform: str):
+    logger = logging.getLogger("api->get_current_price")
+
     if platform.lower() == "bn":
         bn = BnApi()
-        try:
-            price = float(bn.client.futures_symbol_ticker(symbol=symbol)["price"])
-            logger.info(f"get current price bn: {price}")
-            return price
-        except Exception as e:
-            logger.error(f"get current price bn error: {e}")
-            send_wecom_msg(f"get current price bn error: {e}")
-            return None
+        price = float(bn.client.futures_symbol_ticker(symbol=symbol)["price"])
+        logger.info(f"get current price bn: {price}")
+        return price
     else:
         return 0
 
 
+@retry_api(max_retries=5, delay=0.5)
+def get_filled_orders(symbol:str,start_time="0",end_time="0",platform:str="bn"):
+    logger=logging.getLogger("api->get_filled_orders")
+    if platform.lower() == "bn":
+        bn = BnApi()
+
+        filled_rows = bn.client.futures_account_trades(
+            symbol=symbol,
+            limit="1000",
+            startTime=start_time,
+            endTime=end_time,
+            fromId=None
+        )
+
+        return filled_rows
+    return None
+
+@retry_api(max_retries=5, delay=0.5)
+def get_pending_orders(symbol:str,platform:str="bn"):
+    logger=logging.getLogger("api->get_pending_orders")
+    if platform.lower() == "bn":
+        bn = BnApi()
+        pending_orders = bn.client.futures_get_open_orders(symbol=symbol)
+        logger.info(f"get pending orders bn: {pending_orders}")
+        return pending_orders
+    return None

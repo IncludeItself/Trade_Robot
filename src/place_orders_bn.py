@@ -3,7 +3,7 @@ from datetime import datetime
 
 from dateparser import date
 
-from api.api import place_order_api, get_current_price
+from api.api import place_order_api, get_current_price, get_pending_orders
 from api.bnapi import BnApi
 from exception.exception_handler import exception_handler
 from logs import logger
@@ -139,11 +139,13 @@ def place_orders_by_line(symbol, current_price, direction="Sell"):
 
 
 def place_order_bn(symbol):
-    bn=BnApi()
+
     current_price=get_current_price(symbol["symbol"], symbol["platform"])
+    if current_price is None:
+        return
 
     try:
-        state.t_pending_orders[symbol["symbol"]]=bn.client.futures_get_open_orders(symbol=symbol["symbol"])
+        state.t_pending_orders[symbol["symbol"]]=get_pending_orders(symbol["symbol"])
     except Exception as e:
         exception_handler(e,f"币安获取{symbol['symbol']}的挂单时错误：{e}")
         return

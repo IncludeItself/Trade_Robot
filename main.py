@@ -46,7 +46,8 @@ def schedule_jobs(scheduler):
 
     # 如果现在处在周一至周五的A股，手动启动任务
     start_day,end_day = map(int, trade_day.split("-"))
-    # 一-日对应1-7
+    start_day+=1
+    end_day+=1
     today = datetime.datetime.now().isoweekday()
     test_logger.info(f"today_int:{today}")
     if start_day<=today<=end_day:

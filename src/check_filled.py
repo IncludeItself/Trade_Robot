@@ -3,7 +3,7 @@ import threading
 from datetime import datetime
 import time
 
-from api.api import place_order_api
+from api.api import place_order_api, get_filled_orders
 from api.bnapi import BnApi
 from data.sqllite import get_bar_data, delete_tbl_pending_orders, insert_filled_order, get_filled_orders_symbol, \
     get_pending_orders_symbol, update_tbl_filled_orders_symbol
@@ -146,27 +146,17 @@ def check_filled():
                             clear_orders(pending_order["symbol"])
                         continue
             elif symbol_info["platform"]=="bn" and state.is_in_bn_period:
-                bn=BnApi()
                 end_timestamp=datetime.now().timestamp()
                 start_timestamp=max(state.t_filled_timestamp.get(symbol_info["symbol"],0),end_timestamp-7*24*60*60)*1000+1
                 end_timestamp=end_timestamp*1000
-                try:
-                    filled_rows=bn.client.futures_account_trades(
-                                                                    symbol=symbol_info["symbol"],
-                                                                    limit="1000",
-                                                                    startTime=str(int(start_timestamp)),
-                                                                    endTime=str(int(end_timestamp)),
-                                                                    fromId=None
-                                                                )
-                except Exception as e:
-                    exception_handler(e,f"币安查询成交记录时错误,时间：{start_timestamp}到{end_timestamp}")
-                    send_wecom_msg(get_public_ip())
-                    continue
+                filled_rows=get_filled_orders(symbol_info["symbol"],str(int(start_timestamp)),str(int(end_timestamp)),symbol_info["platform"])
                 if filled_rows and len(filled_rows)>0:
                     msg_str=""
                     for filled_row in filled_rows:
                         msg_str+=f"{filled_row['side']} {filled_row['symbol']} {filled_row['qty']} {filled_row['price']}/{filled_row['commission']}\n"
                     send_wecom_msg(msg_str)
+                else:
+                    continue
                 for filled_row in filled_rows:
                     with orders_lock:
                         symbol_filled = state.t_filled_orders.get(filled_row["symbol"], [])

@@ -2,6 +2,8 @@ from binance.client import Client
 from binance.exceptions import BinanceAPIException, BinanceRequestException
 from config.env_config import config
 import time
+
+from src.public_ip import get_public_ip
 from wecom.wecom import send_wecom_msg
 
 
@@ -22,6 +24,7 @@ class BnApi:
             # 如果初始化失败，重置状态，保证外部调用一定拿到有效实例
             if not cls._initialized:
                 cls._instance = None
+                send_wecom_msg(get_public_ip())
                 raise Exception("❌ 币安API初始化失败：5秒内无法连接")
 
         return cls._instance
