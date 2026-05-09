@@ -1,8 +1,18 @@
 import os
+import sys
 from dotenv import load_dotenv
 
-# 加载.env文件
-load_dotenv()
+def get_base_path():
+    # 打包后 exe 运行
+    if getattr(sys, 'frozen', False):
+        return os.path.dirname(sys.executable)
+    # 开发环境运行
+    else:
+        return os.path.abspath(os.path.dirname(__file__))
+
+# 加载 exe 同级目录下的 .env
+env_path = os.path.join(get_base_path(), '.env')
+load_dotenv(dotenv_path=env_path)
 
 
 class EnvConfig:
@@ -58,6 +68,10 @@ class EnvConfig:
         elif self.ENVIRONMENT == 'TEST':
             return 'TEST'
         return 'DEV'
+
+    @property
+    def wecom_webhook_url(self):
+        return os.getenv('WECOM_WEBHOOK_URL', '')
 
 
 # 创建全局配置实例

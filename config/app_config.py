@@ -1,6 +1,7 @@
 import configparser
 import os
 
+from config.env_config import get_base_path
 
 
 class AppConfig:
@@ -26,13 +27,13 @@ class AppConfig:
             "a_trade_day": self._trade_config.get("trading_time", "a_trade_day"),
             "start_time": self._trade_config.get("trading_time", "start_time"),
             "end_time": self._trade_config.get("trading_time", "end_time"),
-            "break_up": self._trade_config.getfloat("threshold", "break_up"),
         }
+
 
     def _load_config(self, filename):
         """加载配置文件"""
         config = configparser.ConfigParser()
-        config_path = os.path.join(os.path.dirname(__file__), filename)
+        config_path = os.path.join(get_base_path(), filename)
         if not config.read(config_path, encoding="utf-8"):
             raise FileNotFoundError(f"配置文件 {config_path} 不存在或格式错误")
         return config

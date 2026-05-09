@@ -5,6 +5,7 @@ import signal
 # from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.blocking import BlockingScheduler
 
+from config.env_config import config
 from logs.logger import setup_logging
 from src.gui import create_main_window
 from src.start_end import start_a_task, end_a_task, stop_all_task, initialize, daily_task
@@ -74,71 +75,70 @@ def schedule_jobs(scheduler):
 #     print(f"\n接收到终止信号 {signum}，准备优雅退出...")
 #     stop_all_task()
 
+    
+
 def main():
-    setup_logging()
-
-    # 获取通用 logger
-    logger = logging.getLogger(__name__)
-
-    # 获取测试专属 logger
-    test_logger = logging.getLogger("test_logger")
-
-    # 通用日志：不同环境输出不同级别
-    # logger.debug("这是调试信息（测试/开发环境输出，生产环境不输出）")
-    # logger.info("这是普通信息（测试/开发环境输出，生产环境不输出）")
-    # logger.warning("这是警告信息（所有环境输出）")
-    # logger.error("这是错误信息（所有环境输出）")
-
-    # 测试专属日志：仅测试环境输出
-    # test_logger.info("这是测试专属日志（仅 TEST 环境可见）")
-
-    # 打印当前环境提示
-    # print(f"\n当前运行环境：{config.env}")
-    # print(f"日志级别：{logging.getLevelName(logging.getLogger().getEffectiveLevel())}")
-    # 创建调度器，指定中国时区（关键，避免时间偏移）
-
-    initialize()
-
-    scheduler = BlockingScheduler(timezone="Asia/Shanghai")
-
-    # 添加任务
-    schedule_jobs(scheduler)
-
-    # # 创建主窗口
-    # main_window = create_main_window()
-    #
-    # def on_close():
-    #     """
-    #     关闭窗口时的回调函数，用于优雅地停止所有任务和调度器。
-    #     """
-    #     print("正在关闭应用程序...")
-    #     main_window.destroy()
-    #     stop_all_task()
-    #     if scheduler.running:
-    #         scheduler.shutdown()
-    #         print("\n✅ 调度器已停止，所有任务已清理")
-    #
-    #
-    # # 绑定主窗口关闭事件
-    # main_window.protocol("WM_DELETE_WINDOW", on_close)
-
-    # 启动调度器
     try:
+        setup_logging()
+
+        # 获取通用 logger
+        logger = logging.getLogger(__name__)
+
+        # 获取测试专属 logger
+        test_logger = logging.getLogger("test_logger")
+
+        # 通用日志：不同环境输出不同级别
+        # logger.debug("这是调试信息（测试/开发环境输出，生产环境不输出）")
+        # logger.info("这是普通信息（测试/开发环境输出，生产环境不输出）")
+        # logger.warning("这是警告信息（所有环境输出）")
+        # logger.error("这是错误信息（所有环境输出）")
+
+        # 测试专属日志：仅测试环境输出
+        # test_logger.info("这是测试专属日志（仅 TEST 环境可见）")
+
+        # 打印当前环境提示
+        # print(f"\n当前运行环境：{config.env}")
+        # print(f"日志级别：{logging.getLevelName(logging.getLogger().getEffectiveLevel())}")
+        # 创建调度器，指定中国时区（关键，避免时间偏移）
+
+        # 打印当前环境提示
+        print(f"\n当前运行环境：{config.env}")
+        print(f"日志级别：{logging.getLevelName(logging.getLogger().getEffectiveLevel())}")
+        
+        # 初始化
+        initialize()
+
+        # 创建调度器，指定中国时区（关键，避免时间偏移）
+        scheduler = BlockingScheduler(timezone="Asia/Shanghai")
+
+        # 添加任务
+        schedule_jobs(scheduler)
+
+        # 启动调度器
         print("=" * 50)
         print(f"定时任务调度器启动 | 当前时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print("任务规则：每周一至周五 9:30-11:30、13:00-15:00 运行核心任务")
         print("按 Ctrl+C 停止调度器...")
         print("=" * 50)
+        
+        # 启动调度器（阻塞式）
         scheduler.start()
-        # 启动GUI主循环（阻塞式，直到关闭窗口）
-        # main_window.mainloop()
-    # except KeyboardInterrupt:
+    except Exception as e:
+        # 捕获所有异常，打印错误信息
+        print(f"程序运行出错：{str(e)}")
+        import traceback
+        traceback.print_exc()
+        # 等待用户输入，确保命令窗口不会立即关闭
+        input("按回车键退出...")
     except (KeyboardInterrupt, SystemExit):
         # 停止调度器时，确保核心任务也停止
         stop_all_task()
         send_wecom_msg("定时任务调度器已停止")
-        scheduler.shutdown()
+        if 'scheduler' in locals() and scheduler.running:
+            scheduler.shutdown()
         print("\n✅ 调度器已停止，所有任务已清理")
+        # 等待用户输入，确保命令窗口不会立即关闭
+        input("按回车键退出...")
 
 
 

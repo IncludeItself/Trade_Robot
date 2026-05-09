@@ -1,10 +1,10 @@
 # 全局状态变量，用于标记核心任务是否正在运行
 import logging
-from datetime import datetime
+from datetime import datetime, date
 
 from api.api import get_positions
 from config.app_config import appConfig
-from data.sqllite import get_last_day_bar
+from data.sqllite import get_last_day_bar, get_profit_symbol, insert_profit_symbol
 
 is_task_running = False
 is_in_a_period = False
@@ -29,6 +29,8 @@ t_period= {}
 t_filled_timestamp={}
 # 持仓记录
 t_positions={}
+# 累计盈利
+t_profits={}
 
 
 def get_last_bar_history(symbol:str):
@@ -88,16 +90,67 @@ def get_symbol_info(symbol:str):
     return None
 
 def get_position(symbol=""):
-    pos_qty=t_positions.get(symbol,None)
-    if pos_qty is None:
+    pos_dict=t_positions.get(symbol,None)
+    if pos_dict is None:
         symbol_info=get_symbol_info(symbol)
         if symbol_info is None:
-            return 0
+            return None
         if symbol_info["platform"].lower() == "bn":
-            pos_qty,update_timestamp=get_positions(symbol_info["symbol"],"bn")
-            t_positions[symbol]={"pos_qty":pos_qty,"timestamp":update_timestamp}
-            return t_positions[symbol]
+            pos_dict=get_positions(symbol_info["symbol"],"bn")
+            t_positions[symbol]=pos_dict
+            return pos_dict
         return None
     else:
-        return pos_qty
+        return pos_dict
+
+def get_profit(symbol=""):
+    profit=t_profits.get(symbol,None)
+    if not profit:
+        profit = get_profit_symbol(symbol)
+    today = date.today()
+    today_str = today.strftime("%Y-%m-%d")
+    today_year = today.year
+    today_month = today.month
+    if profit and profit.get("date")==today_str:
+        return profit
+
+    if profit:
+        db_date = datetime.strptime(profit["date"], "%Y-%m-%d").date()
+        db_year = db_date.year
+        db_month = db_date.month
+        if db_year == today_year:
+            if db_month == today_month:
+                # 同年同月不同日 → dtd 清0
+                res_dtd = 0.0
+                res_mtd = profit["mtd"]
+                res_ytd = profit["ytd"]
+            else:
+                # 同年不同月 → dtd、mtd 清0
+                res_dtd = 0.0
+                res_mtd = 0.0
+                res_ytd = profit["ytd"]
+
+        else:
+            # 不同年份 → 全 0
+            res_dtd = 0.0
+            res_mtd = 0.0
+            res_ytd = 0.0
+    else:
+        # 不同年份 → 全 0
+        res_dtd = 0.0
+        res_mtd = 0.0
+        res_ytd = 0.0
+    t_profits[symbol]={
+        "symbol":symbol,
+        "date":today_str,
+        "dtd":res_dtd,
+        "mtd":res_mtd,
+        "ytd":res_ytd,
+    }
+    return t_profits[symbol]
+
+
+def update_profit_symbol(symbol:str,profit_dict:dict):
+    t_profits[symbol]=profit_dict
+    insert_profit_symbol(profit_dict)
 

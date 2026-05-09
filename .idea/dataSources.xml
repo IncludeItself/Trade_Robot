@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:E:\workplace\Trade_Robot\data\trade_robot.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="trade_robot.db [2]" uuid="96407170-8169-4cae-a27d-6e2ac645c863">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\39015\Desktop\trade robot\data\trade_robot.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

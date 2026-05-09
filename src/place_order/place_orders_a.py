@@ -1,14 +1,18 @@
 import logging
-from typing import Dict
+from datetime import datetime
 
 import numpy as np
 import pandas as pd
 
-from api.bnapi import BnApi
+from api.api import place_order_api
 from config.app_config import appConfig
+from data.sqllite import get_bar_data, get_pending_orders_symbol
 from src import state
+from src.common import sell_order_exist, buy_order_exist
+from src.grid_limit import grid_allow
+from src.locks import orders_lock
+from src.stack_limit import stack_support_sell, stack_support_buy
 from src.state import get_period
-
 
 # ======================
 # 全局配置（实盘最优参数）
@@ -20,7 +24,7 @@ WINDOWS = {
 }
 
 
-def price_advice_a(bar_data: list, symbol: Dict):
+def price_advice_a(bar_data: list, symbol: dict):
     logger = logging.getLogger("price_advice")
 
     if bar_data is None or len(bar_data)==0:
@@ -124,14 +128,14 @@ def price_advice_a(bar_data: list, symbol: Dict):
             "reason":"价格处在两天最后四分位上，且明显缩量"
         }
     middle_break=(last_second["price"]-middle.get("min",0.0))/middle.get("min",0.0) if middle.get("min",0.0)!=0 else 0
-    if middle_break>appConfig["break_up"] and short["avg_vol"]<middle["avg_vol"]:
+    if middle_break>symbol["least_profit"] and short["avg_vol"]<middle["avg_vol"]:
         return {
             "signal":"Sell",
             "price":last_second["price"],
             "reason":f"中窗口上涨{round(middle_break,2)},且短窗口平均成交量：{short["avg_vol"]}，小于中窗口平均成交量：{middle["avg_vol"]}"
         }
     middle_dive=(last_second["price"]-middle.get("max",0.0))/middle.get("max",0.0) if middle.get("max",0.0)!=0 else 0
-    if middle_dive<-appConfig["break_up"] and short["avg_vol"]<middle["avg_vol"]:
+    if middle_dive<-symbol["least_profit"] and short["avg_vol"]<middle["avg_vol"]:
         return {
             "signal":"Buy",
             "price":last_second["price"],
@@ -144,4 +148,49 @@ def price_advice_a(bar_data: list, symbol: Dict):
     }
     pass
 
+def place_orders_a(symbol:dict)->bool:
+    test_logger = logging.getLogger("test_logger")
+    logger=logging.getLogger("place_orders_a")
+    bar_data = get_bar_data(symbol["symbol"], 0, datetime.now().timestamp())
+    result = price_advice_a(bar_data, symbol)
+    if result is None:
+        return False
+    signal, reason, price = result["signal"], result["reason"], result["price"]
+    test_logger.info(f"{symbol['symbol']} 分析结果：{signal} {reason} 价格：{price}")
+    logger.info(f"{symbol['symbol']} 分析结果：{signal} {reason} 价格：{price}")
+    if signal == "Wait":
+        return False
+    with orders_lock:
+        if not sell_order_exist(symbol) and signal == "Sell":
+            qty_stack, stack_price, pos_qty = stack_support_sell(symbol, price)
+            qty_grid = grid_allow("Sell", symbol["symbol"], price, pos_qty)
+            if stack_price > round(bar_data[-1]["pre_close"] * (1 + symbol["upper_limit"]), 2):
+                test_logger.info(f"{symbol['symbol']} 卖出价格超过上轨，不操作挂单")
+                logger.info(f"{symbol['symbol']} 卖出价格超过上轨，不操作挂单")
+                return False
+            # 执行卖出操作
+            place_order_api({
+                "symbol":symbol["symbol"],
+                "price":max(price, stack_price),
+                "qty":min(qty_stack, qty_grid),
+                "direction":"Sell"
+            }, "ths")
 
+        if not buy_order_exist(symbol) and signal == "Buy":
+            qty_stack, stack_price, pos_qty = stack_support_buy(symbol, price)
+            qty_grid = grid_allow("Buy", symbol["symbol"], price, pos_qty)
+            # 执行买入操作
+            if stack_price < round(bar_data[-1]["pre_close"] * (1 - symbol["lower_limit"]), 2):
+                test_logger.info(f"{symbol['symbol']} 买入价格低于下轨，不操作挂单")
+                logger.info(f"{symbol['symbol']} 买入价格低于下轨，不操作挂单")
+                return False
+            # 执行买入操作
+            place_order_api({
+                "symbol":symbol["symbol"],
+                "price":min(price, stack_price),
+                "qty":min(qty_stack, qty_grid),
+                "direction":"Buy"
+            }, "ths")
+
+        state.t_pending_orders[symbol["symbol"]] = get_pending_orders_symbol(symbol["symbol"])
+        return True

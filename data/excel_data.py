@@ -1,4 +1,25 @@
 import pandas as pd
+import os
+import sys
+
+def get_data_path(filename):
+    """获取数据文件的绝对路径，支持打包后的环境"""
+    # 检查是否在打包后的环境中运行
+    if getattr(sys, 'frozen', False):
+        # 在打包后的环境中，使用可执行文件所在目录
+        base_path = os.path.dirname(sys.executable)
+    else:
+        # 在开发环境中，使用项目根目录
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    
+    data_path = os.path.join(base_path, "data", filename)
+    
+    # 确保data目录存在
+    data_dir = os.path.join(base_path, "data")
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir, exist_ok=True)
+    
+    return data_path
 
 
 
@@ -47,12 +68,14 @@ def get_symbols_from_excel():
     Returns:
         list: 字典列表，每个字典代表一行启用的股票数据
     """
-    data = excel_to_dict_list('data/tr_data.xlsx', 'symbols', rows=None)
+    data_path = get_data_path('tr_data.xlsx')
+    data = excel_to_dict_list(data_path, 'symbols', rows=None)
     # 过滤掉 "on" 字段不为 True 的行
     return [row for row in data if row.get('on') is True]
 
 def get_grid(t_symbols):
-    data = excel_to_dict_list('data/tr_data.xlsx', 'grid', rows=None)
+    data_path = get_data_path('tr_data.xlsx')
+    data = excel_to_dict_list(data_path, 'grid', rows=None)
     result = {}
     for symbol in t_symbols:
         # 将 t_symbols 中的 symbol 和 data 中的 symbol 都转换为字符串进行比较
@@ -60,7 +83,7 @@ def get_grid(t_symbols):
         # 同时，统一使用字符串作为 result 的键，增加后续处理的稳定性
         key = str(symbol["symbol"])
         result_symbol=[row for row in data if str(row["symbol"]) == key]
-        result_symbol.sort(key=lambda row: row["qty"],reverse=True)
+        result_symbol.sort(key=lambda row: row["price"],reverse=True)
         result[key] = result_symbol
     return result
 

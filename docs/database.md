@@ -83,3 +83,18 @@ create table if not exists tbl_bar_history
             primary key (symbol, date)
     );
 ```
+
+### tbl_profit
+```sql
+create table if not exists tbl_profit
+    (
+        symbol text not null,
+        date   text not null,
+        dtd    real not null,
+        mtd    real,
+        "",
+        ytd    real,
+        constraint tbl_profit_pk
+            primary key (symbol, date)
+    );
+```

@@ -1,9 +1,11 @@
 import requests
 import json
 
+from config.env_config import config
+
 # 替换你的Webhook key
-WEBHOOK_KEY = "5000b7ee-424b-4b4a-99df-f366a393f0d3"
-WEBHOOK_URL = f"https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={WEBHOOK_KEY}"
+
+WEBHOOK_URL = config.wecom_webhook_url
 
 def send_wecom_msg(content):
 
@@ -12,5 +14,6 @@ def send_wecom_msg(content):
     # print(resp.json())
 
 # 测试
-# send_wecom_msg("测试：企业微信消息推送（原群机器人）")
+if __name__ == "__main__":
+    send_wecom_msg("测试：企业微信消息推送（原群机器人）")
 

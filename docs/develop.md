@@ -15,10 +15,21 @@ deactivate
 ```
 
 ## 安装依赖
-# 安装依赖
 ```shell
 # 生成 requirements.txt
 pip freeze > requirements.txt
 # 按 requirements.txt 安装依赖
 pip install -r requirements.txt
 ```
+
+
+## 打包项目
+```shell
+# 打包项目
+pyinstaller trade_robot.spec
+# 重新打包
+pyinstaller trade_robot.spec --clean
+# 清理旧构建
+Remove-Item -Recurse -Force dist, build
+```
+

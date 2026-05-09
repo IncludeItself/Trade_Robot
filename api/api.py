@@ -9,14 +9,14 @@ from binance import BinanceRequestException, BinanceAPIException
 
 from api.bnapi import BnApi
 from config.env_config import config
-from logs import logger
+from data.sqllite import insert_pending_order
 from mock.excel import excel_to_dict_list
 from api.get_sina_stock import get_sina_stock
 from wecom.wecom import send_wecom_msg
 
 access_time = 0
 
-def retry_api(max_retries=5, delay=0.5):
+def retry_api(max_retries=5, delay=1):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -49,12 +49,12 @@ def retry_api(max_retries=5, delay=0.5):
                         # 业务错误（key错、参数错）直接失败，不重试
                         # raise
             # 全部重试失败 → 抛出最终异常
-            send_wecom_msg(f"❌ 连续 {max_retries} 次接口调用失败")
+            send_wecom_msg(f"❌ {last_exception}")
             # raise Exception(f"❌ 连续 {max_retries} 次接口调用失败") from last_exception
         return wrapper
     return decorator
 
-@retry_api(max_retries=5, delay=0.5)
+@retry_api(max_retries=5, delay=1)
 def get_symbol_bar_data(exchange,stock_code):
     logger = logging.getLogger(__name__)
     test_logger = logging.getLogger("test_logger")
@@ -180,10 +180,20 @@ def get_bar_history(exchange,prefix,symbol):
     return None
 
 
-@retry_api(max_retries=5, delay=0.5)
+@retry_api(max_retries=5, delay=1)
 def place_order_api(pending_order:dict, platform:str):
-    logger=logging.getLogger("api->place_order_api")
-    if platform.lower() == "bn":
+    logger=logging.getLogger("place_order_api")
+    if config.env == "TEST":
+        logger.info(f"✅ 测试环境，不执行操作：{pending_order["symbol"]} ，数量：{pending_order["qty"]} ，价格：{pending_order["price"]}")
+        return
+    if platform.lower() == "ths":
+        test_logger = logging.getLogger("test_logger")
+        test_logger.info(f"✅ 在同花顺桌面版上操作：{pending_order["direction"]} {pending_order["symbol"]} ，数量：{pending_order["qty"]} ，价格：{pending_order["price"]}")
+        logger.info(f"✅ 在同花顺桌面版上操作：{pending_order["direction"]} {pending_order["symbol"]} ，数量：{pending_order["qty"]} ，价格：{pending_order["price"]}")
+
+        insert_pending_order(pending_order)
+        pass
+    elif platform.lower() == "bn":
         side = "BUY" if pending_order["qty"] > 0 else "SELL"
         qty_str = str(abs(pending_order["qty"]))
         position_side = "LONG"
@@ -214,22 +224,24 @@ def place_order_api(pending_order:dict, platform:str):
                 logger.error(f"place order bn error: {e}")
                 send_wecom_msg(f"place order bn error: {e}")
 
-@retry_api(max_retries=5, delay=0.5)
+@retry_api(max_retries=5, delay=1)
 def get_positions(symbol:str, platform:str):
     logger=logging.getLogger("api->get_positions")
+    update_timestamp = datetime.now().timestamp()
     if platform.lower() == "bn":
         bn = BnApi()
 
         positions = bn.client.futures_position_information(symbol=symbol)
         logger.info(f"get positions bn: {positions}")
         if not positions:
-            return 0
-        return sum(float(order["positionAmt"]) for order in positions),max(float(order["updateTime"]) for order in positions)/1000
 
-    return None
+            return {"pos_qty":0,"timestamp":update_timestamp}
+        return {"pos_qty":sum(float(order["positionAmt"]) for order in positions),"timestamp":max(float(order["updateTime"]) for order in positions)/1000}
+
+    return {"pos_qty":0,"timestamp":update_timestamp}
 
 
-@retry_api(max_retries=5, delay=0.5)
+@retry_api(max_retries=5, delay=1)
 def get_current_price(symbol: str, platform: str):
     logger = logging.getLogger("api->get_current_price")
 
@@ -242,7 +254,7 @@ def get_current_price(symbol: str, platform: str):
         return 0
 
 
-@retry_api(max_retries=5, delay=0.5)
+@retry_api(max_retries=5, delay=1)
 def get_filled_orders(symbol:str,start_time="0",end_time="0",platform:str="bn"):
     logger=logging.getLogger("api->get_filled_orders")
     if platform.lower() == "bn":
@@ -259,7 +271,7 @@ def get_filled_orders(symbol:str,start_time="0",end_time="0",platform:str="bn"):
         return filled_rows
     return None
 
-@retry_api(max_retries=5, delay=0.5)
+@retry_api(max_retries=5, delay=1)
 def get_pending_orders(symbol:str,platform:str="bn"):
     logger=logging.getLogger("api->get_pending_orders")
     if platform.lower() == "bn":
@@ -267,4 +279,5 @@ def get_pending_orders(symbol:str,platform:str="bn"):
         pending_orders = bn.client.futures_get_open_orders(symbol=symbol)
         logger.info(f"get pending orders bn: {pending_orders}")
         return pending_orders
-    return None
+    logger.info(f"get no pending orders bn")
+    return []

@@ -1,15 +1,18 @@
 import datetime
 import logging
 import threading
+from pickle import TRUE
 
 from api.api import get_bar_history
 from data.excel_data import get_symbols_from_excel, get_grid
 from data.sqllite import refresh_tbl_pending_order, refresh_tbl_bar_data, get_pending_orders, get_filled_orders, \
     get_last_bar_datas, insert_bar_history, get_filled_timestamp
-from src.place_orders import place_orders
-from src.check_filled import check_filled
+
+from src.check_filled.check_filled import check_filled
 from src.get_bar_data import get_bar_data
 from src import state
+from src.place_order.place_orders import place_orders
+from src.public_ip import get_public_ip
 from wecom.wecom import send_wecom_msg
 
 # 全局标志位：控制核心任务的运行/停止
@@ -45,6 +48,8 @@ def daily_task():
     state.t_last_bar_data = get_last_bar_datas(state.t_symbols)
 
 
+    # 发送公网ip
+    send_wecom_msg(f"当前公网ip：{get_public_ip(proxy=True)}")
 
 
 def initialize():

@@ -1,5 +1,7 @@
 import sqlite3
 import threading
+import os
+import sys
 from datetime import datetime, timedelta
 import decimal  # 量化用decimal避免浮点数精度问题
 from unittest import result
@@ -9,11 +11,31 @@ from config.app_config import appConfig
 # 使用 threading.local() 为每个线程创建独立的数据库连接
 db_local = threading.local()
 
+def get_db_path():
+    """获取数据库文件的绝对路径，支持打包后的环境"""
+    # 检查是否在打包后的环境中运行
+    if getattr(sys, 'frozen', False):
+        # 在打包后的环境中，使用可执行文件所在目录
+        base_path = os.path.dirname(sys.executable)
+    else:
+        # 在开发环境中，使用项目根目录
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    
+    db_path = os.path.join(base_path, "data", "trade_robot.db")
+    
+    # 确保data目录存在
+    data_dir = os.path.join(base_path, "data")
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir, exist_ok=True)
+    
+    return db_path
+
 def get_db_connection():
     """为当前线程获取或创建数据库连接"""
     if not hasattr(db_local, 'conn'):
+        db_path = get_db_path()
         db_local.conn = sqlite3.connect(
-            database="data/trade_robot.db",
+            database=db_path,
             check_same_thread=False  # 每个线程独享连接，无需检查
         )
         db_local.conn.row_factory = sqlite3.Row
@@ -109,6 +131,23 @@ def init_tables():
     );
     """
     cursor.execute(create_bar_history_table_sql)
+    conn.commit()
+
+    # 6. 创建tbl_profit
+    create_profit_table_sql = """
+    create table if not exists tbl_profit
+    (
+        symbol text not null,
+        date   text not null,
+        dtd    real not null,
+        mtd    real,
+        "",
+        ytd    real,
+        constraint tbl_profit_pk
+            primary key (symbol, date)
+    );
+    """
+    cursor.execute(create_profit_table_sql)
     conn.commit()
 
     print("✅ 数据库表初始化成功")
@@ -333,8 +372,33 @@ def get_filled_timestamp(symbols):
             dict_result[symbol["symbol"]]=row["timestamp"] if row else 0
         except:
             dict_result[symbol["symbol"]]=0
-
+    print(dict_result)
     return dict_result
+
+def get_profit_symbol(symbol:str):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    select_sql = """
+        SELECT * FROM tbl_profit where symbol=? order by date desc limit 1
+               """
+    cursor.execute(select_sql, (symbol,))
+    rows = cursor.fetchall()
+    dict_result=[dict(row) for row in rows]
+
+    return dict_result[0] if dict_result else None
+
+def insert_profit_symbol(profit_dict:dict):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    insert_sql = """    
+    INSERT OR REPLACE INTO tbl_profit
+    (symbol, date, dtd, mtd, ytd)
+    VALUES (?, ?, ?, ?, ?)
+    """
+    cursor.execute(insert_sql,
+        (profit_dict["symbol"], profit_dict["date"], profit_dict["dtd"], profit_dict["mtd"], profit_dict["ytd"])
+    )
+    conn.commit()
 
 
 def insert_order(symbol, order_id, side, order_type, price, quantity, status):

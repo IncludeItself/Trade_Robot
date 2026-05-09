@@ -10,8 +10,8 @@ bn = BnApi()
 # print(line[0])
 
 
-current_price=bn.client.futures_symbol_ticker(symbol="BTCUSDT")
-print(current_price)
+# current_price=bn.client.futures_symbol_ticker(symbol="BTCUSDT")
+# print(current_price)
 
 
 # bn.client.futures_create_order(
@@ -30,14 +30,14 @@ print(current_price)
 # trades=bn.client.futures_account_trades(
 #                 symbol='BTCUSDT',
 #                 limit="1000",
-#                 startTime="1774972800000",
+#                 startTime="1776299990000",
 #                 endTime=str(int(datetime.now().timestamp()*1000)),
 #                 fromId=None
 #             )
 # print(trades)
 
-# pending_orders=bn.client.futures_get_open_orders(symbol="BTCUSDT")
-# print(pending_orders)
+pending_orders=bn.client.futures_get_open_orders(symbol="BTCUSDT")
+print(pending_orders)
 
 
 # holding=bn.client.futures_position_information(symbol="TSLAUSDT")
